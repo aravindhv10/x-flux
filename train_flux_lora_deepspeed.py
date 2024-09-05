@@ -46,6 +46,8 @@ if is_wandb_available():
     import wandb
 logger = get_logger(__name__, log_level="INFO")
 
+from prodigyopt import Prodigy
+
 def get_models(name: str, device, offload: bool, is_schnell: bool):
     t5 = load_t5(device, max_length=256 if is_schnell else 512)
     clip = load_clip(device)
@@ -142,19 +144,27 @@ def main():
     clip.requires_grad_(False)
     dit = dit.to(torch.float32)
     dit.train()
-    optimizer_cls = torch.optim.AdamW
+    # optimizer_cls = torch.optim.AdamW
+    optimizer_cls = Prodigy
     for n, param in dit.named_parameters():
         if '_lora' not in n:
             param.requires_grad = False
         else:
             print(n)
     print(sum([p.numel() for p in dit.parameters() if p.requires_grad]) / 1000000, 'parameters')
+
+    # optimizer = optimizer_cls(
+    #     [p for p in dit.parameters() if p.requires_grad],
+    #     lr=args.learning_rate,
+    #     betas=(args.adam_beta1, args.adam_beta2),
+    #     weight_decay=args.adam_weight_decay,
+    #     eps=args.adam_epsilon,
+    # )
+
     optimizer = optimizer_cls(
         [p for p in dit.parameters() if p.requires_grad],
-        lr=args.learning_rate,
-        betas=(args.adam_beta1, args.adam_beta2),
+        lr=1,
         weight_decay=args.adam_weight_decay,
-        eps=args.adam_epsilon,
     )
 
     train_dataloader = loader(**args.data_config)
