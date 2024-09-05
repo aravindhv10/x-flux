@@ -231,20 +231,30 @@
 #+end_src
 
 #+RESULTS:
-#+begin_example
-On branch aravind_prodigy_dataset
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	new file:   main.org
-	modified:   train_flux_lora_deepspeed.py
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   
-
-#+end_example
+: On branch aravind_prodigy_dataset
+: Changes to be committed:
+:   (use "git restore --staged <file>..." to unstage)
+: 	modified:   .gitignore
+: 	new file:   main.org
+: 	modified:   train_flux_lora_deepspeed.py
+: 
 
 
 #+RESULTS:
 : 0
+
+#+begin_src sh :shebang #!/bin/sh :results output 
+  git commit -m 'Fixed broadcasting issue'
+  ssh-add "${HOME}/.ssh/github10"
+  git push --set-upstream origin aravind_prodigy_dataset
+#+end_src
+
+#+RESULTS:
+: On branch aravind_prodigy_dataset
+: Changes not staged for commit:
+:   (use "git add <file>..." to update what will be committed)
+:   (use "git restore <file>..." to discard changes in working directory)
+: 	modified:   main.org
+: 
+: no changes added to commit (use "git add" and/or "git commit -a")
+: Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.

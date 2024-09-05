@@ -253,7 +253,7 @@ def main():
                 tmp_t = t.unsqueeze(1).unsqueeze(1)
 
                 x_0 = torch.randn_like(x_1).to(accelerator.device)
-                x_t = (1 - tmp_t) * x_1 + tmp_t * x_0
+                x_t = (1 - t[:, None, None]) * x_1 + t[:, None, None] * x_0
                 bsz = x_1.shape[0]
                 guidance_vec = torch.full((x_t.shape[0],), 4, device=x_t.device, dtype=x_t.dtype)
 
