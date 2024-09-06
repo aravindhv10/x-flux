@@ -24,17 +24,22 @@
   .gitignore
   main.org
   train_flux_lora_deepspeed.py
+  make_latent.py
+  new/train_flux_lora_deepspeed.org
 #+end_src
 
 #+begin_src conf :tangle ./rm.txt
   git_add.txt
+  gitignore
+  #main.org#
   .#main.org
   main.org~
   .main.org.~undo-tree~
+  make_latent.py~
+  .make_latent.py.~undo-tree~
   rm.txt
   .train_flux_lora_deepspeed.py.~undo-tree~
   work.sh
-  gitignore
 #+end_src
 
 #+begin_src conf :tangle ./gitignore
@@ -231,26 +236,33 @@
 #+end_src
 
 #+RESULTS:
-: On branch aravind_prodigy_dataset
-: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-: 
-: Changes to be committed:
-:   (use "git restore --staged <file>..." to unstage)
-: 	modified:   main.org
-: 	modified:   train_flux_lora_deepspeed.py
-: 
+#+begin_example
+On branch aravind_prodigy_dataset
+Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   .gitignore
+	modified:   main.org
+	new file:   make_latent.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+
+#+end_example
 
 
 #+RESULTS:
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Fixed broadcasting issue'
+  git commit -m 'Started prodigy work'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 3f29b0a] Fixed broadcasting issue
-:  2 files changed, 10 insertions(+), 10 deletions(-)
+: [aravind_prodigy_dataset e253b18] Started prodigy work
+:  2 files changed, 17 insertions(+), 13 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.

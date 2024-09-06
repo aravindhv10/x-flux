@@ -65,10 +65,13 @@ lib/
 lib64/
 local_settings.py
 *.log
+/#main.org#
 /.#main.org
 /main.org~
 /.main.org.~undo-tree~
 Makefile
+/make_latent.py~
+/.make_latent.py.~undo-tree~
 *.manifest
 MANIFEST
 # mkdocs documentation
