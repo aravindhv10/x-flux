@@ -106,13 +106,14 @@ class text_embedders:
         self.t5 = load_t5(
             'cuda',
             max_length=256 if is_schnell else 512).to(dtype=torch.float16)
-        self.clip = load_clip(device).to(dtype=torch.float16)
+
+        self.clip = load_clip('cuda').to(dtype=torch.float16)
 
         self.t5.requires_grad_(False)
         self.clip.requires_grad_(False)
 
     def process_image_prompt(self, ae_sft_path, prompt_path, output_path):
-        ae_latent = load_file(ae_sft_path)
+        ae_latent = load_file(ae_sft_path)['encoded_image'].unsqueeze(0)
         prompt = open(prompt_path, 'r', encoding='utf-8').read()
 
         inp = prepare(t5=self.t5,

@@ -9,6 +9,10 @@
 #+end_src
 
 #+RESULTS:
+: M	make_latent.py
+: Your branch and 'origin/aravind_prodigy_dataset' have diverged,
+: and have 2 and 1 different commits each, respectively.
+:   (use "git pull" to merge the remote branch into yours)
 
 #+begin_src sh :shebang #!/bin/sh :results output 
   git branch -a
@@ -237,18 +241,14 @@
 #+end_src
 
 #+RESULTS:
-#+begin_example
-On branch aravind_prodigy_dataset
-Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	modified:   .gitignore
-	modified:   main.org
-	new file:   make_latent.py
-	new file:   new/train_flux_lora_deepspeed.org
-
-#+end_example
+: On branch aravind_prodigy_dataset
+: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+: 
+: Changes to be committed:
+:   (use "git restore --staged <file>..." to unstage)
+: 	modified:   main.org
+: 	modified:   make_latent.py
+: 
 
 
 #+RESULTS:
@@ -261,8 +261,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 3e64e3d] Started working on latent caching
-:  4 files changed, 948 insertions(+), 12 deletions(-)
-:  create mode 100644 make_latent.py
-:  create mode 100644 new/train_flux_lora_deepspeed.org
-: Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
+: [aravind_prodigy_dataset bd99417] Started working on latent caching
+:  2 files changed, 55 insertions(+), 17 deletions(-)
