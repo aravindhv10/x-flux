@@ -82,22 +82,60 @@ def load_image(path):
 
 
 def load_vae(name='flux-dev'):
-    vae = load_ae(name, device="cuda")
+    vae = load_ae(name, device="cuda").to(dtype=torch.float16)
     return vae
 
 
-def do_cache(path_image, path_output, vae):
-    img = load_image(path='/data/input/1.jpg')
-    x_1 = vae.encode(img.to('cuda').to(torch.float32)).squeeze(0)
-    out = {'encoded_image': x_1}
-    save_file(out, path_output)
+class image_to_ae_safetensors:
+
+    def __init__(self, name='flux-dev'):
+        self.vae = load_vae(name='flux-dev')
+        self.vae.requires_grad_(False)
+
+    def process_image(self, path_image, path_output):
+        img = load_image(path=path_image)
+        x_1 = self.vae.encode(img.to('cuda').to(torch.float16)).squeeze(0)
+        out = {'encoded_image': x_1}
+        save_file(out, path_output)
 
 
-vae = load_vae(name='flux-dev')
-vae.requires_grad_(False)
-do_cache(path_image = '/data/input/1.jpg', path_output='./test.safetensors', vae = vae)
+class text_embedders:
 
-dict = load_file('./test.safetensors')
+    def __init__(self, is_schnell=False):
+
+        self.t5 = load_t5(
+            'cuda',
+            max_length=256 if is_schnell else 512).to(dtype=torch.float16)
+        self.clip = load_clip(device).to(dtype=torch.float16)
+
+        self.t5.requires_grad_(False)
+        self.clip.requires_grad_(False)
+
+    def process_image_prompt(self, ae_sft_path, prompt_path, output_path):
+        ae_latent = load_file(ae_sft_path)
+        prompt = open(prompt_path, 'r', encoding='utf-8').read()
+
+        inp = prepare(t5=self.t5,
+                      clip=self.clip,
+                      img=ae_latent['encoded_image'],
+                      prompt=prompt)
+
+        save_file(inp, output_path)
+
+
+slave = image_to_ae_safetensors()
+slave.process_image('/data/input/1.jpg', './tmp.safetensors')
+
+slave = text_embedders()
+
+slave.process_image_prompt(ae_sft_path='./tmp.safetensors',
+                           prompt_path='/data/input/1.txt',
+                           output_path='./tmp2.safetensors')
+
+data = load_file('./tmp2.safetensors')
+
+exit()
+
 
 def main():
     args = OmegaConf.load(parse_args())

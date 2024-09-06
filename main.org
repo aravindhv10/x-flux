@@ -18,6 +18,7 @@
 : * aravind_prodigy_dataset
 :   main
 :   remotes/origin/HEAD -> origin/main
+:   remotes/origin/aravind_prodigy_dataset
 :   remotes/origin/main
 
 #+begin_src conf :tangle ./git_add.txt
@@ -245,10 +246,7 @@ Changes to be committed:
 	modified:   .gitignore
 	modified:   main.org
 	new file:   make_latent.py
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
+	new file:   new/train_flux_lora_deepspeed.org
 
 #+end_example
 
@@ -257,12 +255,14 @@ Untracked files:
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Started prodigy work'
+  git commit -m 'Started working on latent caching'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset e253b18] Started prodigy work
-:  2 files changed, 17 insertions(+), 13 deletions(-)
+: [aravind_prodigy_dataset 3e64e3d] Started working on latent caching
+:  4 files changed, 948 insertions(+), 12 deletions(-)
+:  create mode 100644 make_latent.py
+:  create mode 100644 new/train_flux_lora_deepspeed.org
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
