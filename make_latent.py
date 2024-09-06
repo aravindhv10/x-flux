@@ -118,19 +118,19 @@ class text_embedders:
 
         inp = prepare(t5=self.t5,
                       clip=self.clip,
-                      img=ae_latent['encoded_image'],
+                      img=ae_latent,
                       prompt=prompt)
 
         save_file(inp, output_path)
 
 
 slave = image_to_ae_safetensors()
-slave.process_image('/data/input/1.jpg', './tmp.safetensors')
+slave.process_image('/data/input/final.jpg', './tmp.safetensors')
 
 slave = text_embedders()
 
 slave.process_image_prompt(ae_sft_path='./tmp.safetensors',
-                           prompt_path='/data/input/1.txt',
+                           prompt_path='/data/input/caption.txt',
                            output_path='./tmp2.safetensors')
 
 data = load_file('./tmp2.safetensors')
