@@ -397,7 +397,9 @@ def main():
             with accelerator.accumulate(dit):
                 x_1, inp = batch
                 x_1 = x_1.to(device=accelerator.device, dtype=weight_dtype)
-                inp = inp.to(device=accelerator.device, dtype=weight_dtype)
+                for i in inp.keys():
+                    inp[i] = inp[i].to(device=accelerator.device,
+                                       dtype=weight_dtype)
 
                 x_1 = rearrange(x_1,
                                 "b c (h ph) (w pw) -> b (h w) (c ph pw)",
