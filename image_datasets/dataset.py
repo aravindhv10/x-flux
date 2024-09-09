@@ -85,10 +85,14 @@ class CachedDataset(Dataset):
         return len(self.list_path_images)
 
     def __getitem__(self, idx):
-
-        return load_file(
-            self.list_path_ae_output[idx])['encoded_image'], load_file(
-                self.list_path_text_embedding_output[idx])
+        ae = load_file(self.list_path_ae_output[idx])['encoded_image']
+        emb = load_file(self.list_path_text_embedding_output[idx])
+        emb["img"] = emb["img"].squeeze(0)
+        emb["img_ids"] = emb["img_ids"].squeeze(0)
+        emb["txt"] = emb["txt"].squeeze(0)
+        emb["txt_ids"] = emb["txt_ids"].squeeze(0)
+        emb["vec"] = emb["vec"].squeeze(0)
+        return ae, emb
 
 
 def loader(train_batch_size, num_workers, **args):

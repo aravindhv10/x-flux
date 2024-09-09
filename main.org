@@ -253,7 +253,6 @@ Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	modified:   image_datasets/dataset.py
 	modified:   main.org
-	modified:   make_latent.py
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
@@ -266,14 +265,14 @@ Untracked files:
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Mostly completing latent caching'
+  git commit -m 'Fixed batching issue in autoencoder latent'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 7f70c9f] Mostly completing latent caching
-:  3 files changed, 406 insertions(+), 28 deletions(-)
+: [aravind_prodigy_dataset cd27f9e] Fixed batching issue in autoencoder latent
+:  2 files changed, 28 insertions(+), 28 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -282,6 +281,12 @@ Untracked files:
 
 #+RESULTS:
 #+begin_example
+commit cd27f9e0e22a95ed6dcf6d1a6a2672672be4bdf6
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 15:22:38 2024 +0530
+
+    Fixed batching issue in autoencoder latent
+
 commit 7f70c9fe6e8555be290e411aefea50075112260a
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 14:37:42 2024 +0530
@@ -337,11 +342,4 @@ Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Fri Sep 6 20:21:27 2024 +0530
 
     Started working on latent caching
-
-commit 66605e4487f59deabf175e4941f428ed74de6b79
-Merge: 3e64e3d c28a2b0
-Author: aravind-h-v <122849931+aravind-h-v@users.noreply.github.com>
-Date:   Fri Sep 6 19:49:14 2024 +0530
-
-    Merge branch 'XLabs-AI:main' into aravind_prodigy_dataset
 #+end_example
