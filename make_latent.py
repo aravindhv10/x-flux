@@ -98,6 +98,8 @@ class image_to_ae_safetensors:
         self.vae.requires_grad_(False)
 
     def process_image(self, path_image, path_output):
+        if os.path.exists(path_output):
+            return
         embedding = get_embedding(path_image=path_image, auto_encoder=self.vae)
         out = {'encoded_image': embedding}
         save_file(out, path_output)
@@ -117,6 +119,9 @@ class text_embedders:
         self.clip.requires_grad_(False)
 
     def process_image_prompt(self, ae_sft_path, prompt_path, output_path):
+        if os.path.exists(output_path):
+            return
+
         ae_latent = load_file(ae_sft_path)['encoded_image'].unsqueeze(0)
         prompt = open(prompt_path, 'r', encoding='utf-8').read()
 
