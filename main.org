@@ -39,6 +39,7 @@
 #+begin_src conf :tangle ./rm.txt
   git_add.txt
   gitignore
+  image_datasets/.dataset.py.~undo-tree~
   #main.org#
   .#main.org
   main.org~
@@ -251,12 +252,11 @@ Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	modified:   image_datasets/dataset.py
 	modified:   main.org
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	image_datasets/.dataset.py.~undo-tree~
+	
 
 #+end_example
 
@@ -271,8 +271,14 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset cd27f9e] Fixed batching issue in autoencoder latent
-:  2 files changed, 28 insertions(+), 28 deletions(-)
+: On branch aravind_prodigy_dataset
+: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+: 
+: Untracked files:
+:   (use "git add <file>..." to include in what will be committed)
+: 	image_datasets/.dataset.py.~undo-tree~
+: 
+: nothing added to commit but untracked files present (use "git add" to track)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -281,6 +287,12 @@ Untracked files:
 
 #+RESULTS:
 #+begin_example
+commit e86b043fca267d703e17c0ce7bf6b5db16db224f
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 15:31:34 2024 +0530
+
+    Fixed batching issue in autoencoder latent
+
 commit cd27f9e0e22a95ed6dcf6d1a6a2672672be4bdf6
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 15:22:38 2024 +0530
@@ -336,10 +348,4 @@ Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Fri Sep 6 20:23:37 2024 +0530
 
     Merge branch 'main' into aravind_prodigy_dataset
-
-commit bd9941745c350f376d6b7988420a362795f29fc9
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Fri Sep 6 20:21:27 2024 +0530
-
-    Started working on latent caching
 #+end_example

@@ -50,6 +50,7 @@ htmlcov/
 #   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
 .hypothesis/
 #.idea/
+/image_datasets/.dataset.py.~undo-tree~
 #   install all needed dependencies.
 .installed.cfg
 # Installer logs
