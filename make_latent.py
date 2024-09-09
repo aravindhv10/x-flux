@@ -205,6 +205,7 @@ def parse_args():
 
 def main():
     args = OmegaConf.load(parse_args())
+    create_embeddings_in_docker()
     is_schnell = args.model_name == "flux-schnell"
     logging_dir = os.path.join(args.output_dir, args.logging_dir)
 

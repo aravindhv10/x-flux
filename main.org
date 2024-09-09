@@ -266,8 +266,8 @@
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 92ce8d2] Fixed device issue while training
-:  2 files changed, 115 insertions(+), 81 deletions(-)
+: [aravind_prodigy_dataset c689f76] Fixed device issue while training
+:  2 files changed, 15 insertions(+), 15 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -276,6 +276,12 @@
 
 #+RESULTS:
 #+begin_example
+commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 17:13:19 2024 +0530
+
+    Fixed device issue while training
+
 commit 92ce8d2733176305d07dedbbe4cea8ec5dc9f97a
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 17:04:54 2024 +0530
@@ -327,12 +333,6 @@ Date:   Mon Sep 9 10:18:28 2024 +0530
 commit d8aca487d519921abcb47e6472e485c39f4b2e61
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Fri Sep 6 20:32:40 2024 +0530
-
-    Started working on latent caching
-
-commit e45bf5a98a5814c52763d95b8f5a26a25e2d772b
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Fri Sep 6 20:27:25 2024 +0530
 
     Started working on latent caching
 #+end_example
