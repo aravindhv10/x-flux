@@ -84,14 +84,22 @@ class CachedDataset(Dataset):
     def __len__(self):
         return len(self.list_path_images)
 
+    def do_read(self, idx):
+        try:
+            ae = load_file(self.list_path_ae_output[idx])['encoded_image']
+            emb = load_file(self.list_path_text_embedding_output[idx])
+            # emb["img"] = emb["img"].squeeze(0)
+            # emb["img_ids"] = emb["img_ids"].squeeze(0)
+            # emb["txt"] = emb["txt"].squeeze(0)
+            # emb["txt_ids"] = emb["txt_ids"].squeeze(0)
+            # emb["vec"] = emb["vec"].squeeze(0)
+            return ae, emb
+        except:
+            print("failed to read this time, trying again...")
+            return self.do_read(idx)
+
     def __getitem__(self, idx):
-        ae = load_file(self.list_path_ae_output[idx])['encoded_image']
-        emb = load_file(self.list_path_text_embedding_output[idx])
-        emb["img"] = emb["img"].squeeze(0)
-        emb["img_ids"] = emb["img_ids"].squeeze(0)
-        emb["txt"] = emb["txt"].squeeze(0)
-        emb["txt_ids"] = emb["txt_ids"].squeeze(0)
-        emb["vec"] = emb["vec"].squeeze(0)
+        ae, emb = self.do_read(idx)
         return ae, emb
 
 

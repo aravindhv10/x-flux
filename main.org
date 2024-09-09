@@ -256,12 +256,8 @@ Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   main.org
-	modified:   make_latent.py
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	
+	modified:   image_datasets/dataset.py
+	modified:   train_flux_lora_deepspeed_cached.py
 
 no changes added to commit (use "git add" and/or "git commit -a")
 #+end_example
@@ -271,14 +267,16 @@ no changes added to commit (use "git add" and/or "git commit -a")
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'More streamlining'
+  git commit -m 'Separated latent caching code from cached training code'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset eca1b7c] More streamlining
-:  2 files changed, 9 insertions(+), 8 deletions(-)
+: [aravind_prodigy_dataset 4e26dba] Separated latent caching code from cached training code
+:  4 files changed, 248 insertions(+), 546 deletions(-)
+:  rewrite make_latent.py (68%)
+:  copy make_latent.py => train_flux_lora_deepspeed_cached.py (99%)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -287,7 +285,13 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 #+RESULTS:
 #+begin_example
-commit 
+commit 4e26dba8f5933729265a2333d3884b9b88056864
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 19:12:35 2024 +0530
+
+    Separated latent caching code from cached training code
+
+commit eca1b7c42009aacefee9f8a0b341faed2f8e91ca
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 17:18:05 2024 +0530
 
@@ -338,12 +342,6 @@ Date:   Mon Sep 9 11:13:10 2024 +0530
 commit e75f588ead3bd1f48352c3b13ae33dab5244738b
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 10:39:08 2024 +0530
-
-    Started working on latent caching
-
-commit 37ad8d7707c99c4949b369f2b1f90ccde154412b
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Mon Sep 9 10:18:28 2024 +0530
 
     Started working on latent caching
 #+end_example
