@@ -249,15 +249,16 @@
 On branch aravind_prodigy_dataset
 Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   image_datasets/dataset.py
+	modified:   main.org
+	modified:   make_latent.py
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	image_datasets/.dataset.py.~undo-tree~
 
-no changes added to commit (use "git add" and/or "git commit -a")
 #+end_example
 
 
@@ -265,15 +266,14 @@ no changes added to commit (use "git add" and/or "git commit -a")
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Mostly done with latent generation'
+  git commit -m 'Mostly completing latent caching'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 4b1062a] Mostly done with latent generation
-:  2 files changed, 174 insertions(+), 463 deletions(-)
-:  rewrite make_latent.py (77%)
+: [aravind_prodigy_dataset 7f70c9f] Mostly completing latent caching
+:  3 files changed, 406 insertions(+), 28 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -282,6 +282,24 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 #+RESULTS:
 #+begin_example
+commit 7f70c9fe6e8555be290e411aefea50075112260a
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 14:37:42 2024 +0530
+
+    Mostly completing latent caching
+
+commit 4b1062ac5e04825527e2863858e0accff40a1097
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 11:13:10 2024 +0530
+
+    Mostly done with latent generation
+
+commit e75f588ead3bd1f48352c3b13ae33dab5244738b
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 10:39:08 2024 +0530
+
+    Started working on latent caching
+
 commit 37ad8d7707c99c4949b369f2b1f90ccde154412b
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 10:18:28 2024 +0530
@@ -326,22 +344,4 @@ Author: aravind-h-v <122849931+aravind-h-v@users.noreply.github.com>
 Date:   Fri Sep 6 19:49:14 2024 +0530
 
     Merge branch 'XLabs-AI:main' into aravind_prodigy_dataset
-
-commit c28a2b05054f3f873a8fb1a8564322eefb25c12c
-Author: Anzhella Pankratova <son0shad@gmail.com>
-Date:   Fri Sep 6 12:21:20 2024 +0300
-
-    Add Zoe Depth processor for ControlNet
-
-commit 3e64e3da9c02c04e97e3fcad25c9b975a4fa2a5a
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Fri Sep 6 14:39:27 2024 +0530
-
-    Started working on latent caching
-
-commit 195110398cae4974991be74b9eec6fc6714c5a3f
-Author: gradient-diffusion <arseniy555556@gmail.com>
-Date:   Fri Sep 6 03:48:28 2024 +0300
-
-    fix single block lora
 #+end_example
