@@ -63,6 +63,7 @@ from prodigyopt import Prodigy
 
 if is_wandb_available():
     import wandb
+
 logger = get_logger(__name__, log_level="INFO")
 
 
@@ -178,8 +179,6 @@ def create_embeddings_in_docker():
                       list_path_captions=list_captions)
 
 
-
-
 def get_models(name: str, device, offload: bool, is_schnell: bool):
     t5 = load_t5(device, max_length=256 if is_schnell else 512)
     clip = load_clip(device)
@@ -188,8 +187,10 @@ def get_models(name: str, device, offload: bool, is_schnell: bool):
     vae = load_ae(name, device="cpu" if offload else device)
     return model, vae, t5, clip
 
+
 def parse_args():
-    parser = argparse.ArgumentParser(description="Simple example of a training script.")
+    parser = argparse.ArgumentParser(
+        description="Simple example of a training script.")
     parser.add_argument(
         "--config",
         type=str,
@@ -199,7 +200,6 @@ def parse_args():
     )
     args = parser.parse_args()
 
-
     return args.config
 
 
@@ -208,7 +208,8 @@ def main():
     is_schnell = args.model_name == "flux-schnell"
     logging_dir = os.path.join(args.output_dir, args.logging_dir)
 
-    accelerator_project_config = ProjectConfiguration(project_dir=args.output_dir, logging_dir=logging_dir)
+    accelerator_project_config = ProjectConfiguration(
+        project_dir=args.output_dir, logging_dir=logging_dir)
 
     accelerator = Accelerator(
         gradient_accumulation_steps=args.gradient_accumulation_steps,
@@ -233,13 +234,15 @@ def main():
         transformers.utils.logging.set_verbosity_error()
         diffusers.utils.logging.set_verbosity_error()
 
-
     if accelerator.is_main_process:
         if args.output_dir is not None:
             os.makedirs(args.output_dir, exist_ok=True)
 
     # dit, vae, t5, clip = get_models(name=args.model_name, device=accelerator.device, offload=False, is_schnell=is_schnell)
-    dit, _, _, _ = get_models(name=args.model_name, device=accelerator.device, offload=False, is_schnell=is_schnell)
+    dit, _, _, _ = get_models(name=args.model_name,
+                              device=accelerator.device,
+                              offload=False,
+                              is_schnell=is_schnell)
     lora_attn_procs = {}
 
     if args.double_blocks is None:
@@ -257,16 +260,16 @@ def main():
         if match:
             layer_index = int(match.group(1))
 
-        if name.startswith("double_blocks") and layer_index in double_blocks_idx:
+        if name.startswith(
+                "double_blocks") and layer_index in double_blocks_idx:
             print("setting LoRA Processor for", name)
             lora_attn_procs[name] = DoubleStreamBlockLoraProcessor(
-              dim=3072, rank=args.rank
-            )
-        elif name.startswith("single_blocks") and layer_index in single_blocks_idx:
+                dim=3072, rank=args.rank)
+        elif name.startswith(
+                "single_blocks") and layer_index in single_blocks_idx:
             print("setting LoRA Processor for", name)
             lora_attn_procs[name] = SingleStreamBlockLoraProcessor(
-              dim=3072, rank=args.rank
-            )
+                dim=3072, rank=args.rank)
         else:
             lora_attn_procs[name] = attn_processor
 
@@ -284,7 +287,10 @@ def main():
             param.requires_grad = False
         else:
             print(n)
-    print(sum([p.numel() for p in dit.parameters() if p.requires_grad]) / 1000000, 'parameters')
+    print(
+        sum([p.numel()
+             for p in dit.parameters() if p.requires_grad]) / 1000000,
+        'parameters')
 
     # optimizer = optimizer_cls(
     #     [p for p in dit.parameters() if p.requires_grad],
@@ -303,7 +309,8 @@ def main():
     train_dataloader = loader_mine(**args.data_config)
     # Scheduler and math around the number of training steps.
     overrode_max_train_steps = False
-    num_update_steps_per_epoch = math.ceil(len(train_dataloader) / args.gradient_accumulation_steps)
+    num_update_steps_per_epoch = math.ceil(
+        len(train_dataloader) / args.gradient_accumulation_steps)
     if args.max_train_steps is None:
         args.max_train_steps = args.num_train_epochs * num_update_steps_per_epoch
         overrode_max_train_steps = True
@@ -318,8 +325,7 @@ def main():
     first_epoch = 0
 
     dit, optimizer, _, lr_scheduler = accelerator.prepare(
-        dit, optimizer, deepcopy(train_dataloader), lr_scheduler
-    )
+        dit, optimizer, deepcopy(train_dataloader), lr_scheduler)
 
     weight_dtype = torch.float32
     if accelerator.mixed_precision == "fp16":
@@ -329,11 +335,12 @@ def main():
         weight_dtype = torch.bfloat16
         args.mixed_precision = accelerator.mixed_precision
 
-
-    num_update_steps_per_epoch = math.ceil(len(train_dataloader) / args.gradient_accumulation_steps)
+    num_update_steps_per_epoch = math.ceil(
+        len(train_dataloader) / args.gradient_accumulation_steps)
     if overrode_max_train_steps:
         args.max_train_steps = args.num_train_epochs * num_update_steps_per_epoch
-    args.num_train_epochs = math.ceil(args.max_train_steps / num_update_steps_per_epoch)
+    args.num_train_epochs = math.ceil(args.max_train_steps /
+                                      num_update_steps_per_epoch)
 
     if accelerator.is_main_process:
         accelerator.init_trackers(args.tracker_project_name, {"test": None})
@@ -343,9 +350,13 @@ def main():
 
     logger.info("***** Running training *****")
     logger.info(f"  Num Epochs = {args.num_train_epochs}")
-    logger.info(f"  Instantaneous batch size per device = {args.train_batch_size}")
-    logger.info(f"  Total train batch size (w. parallel, distributed & accumulation) = {total_batch_size}")
-    logger.info(f"  Gradient Accumulation steps = {args.gradient_accumulation_steps}")
+    logger.info(
+        f"  Instantaneous batch size per device = {args.train_batch_size}")
+    logger.info(
+        f"  Total train batch size (w. parallel, distributed & accumulation) = {total_batch_size}"
+    )
+    logger.info(
+        f"  Gradient Accumulation steps = {args.gradient_accumulation_steps}")
     logger.info(f"  Total optimization steps = {args.max_train_steps}")
     if args.resume_from_checkpoint:
         if args.resume_from_checkpoint != "latest":
@@ -385,7 +396,13 @@ def main():
         for step, batch in enumerate(train_dataloader):
             with accelerator.accumulate(dit):
                 x_1, inp = batch
-                x_1 = rearrange(x_1, "b c (h ph) (w pw) -> b (h w) (c ph pw)", ph=2, pw=2)
+                x_1 = x_1.to(device=accelerator.device, dtype=weight_dtype)
+                inp = inp.to(device=accelerator.device, dtype=weight_dtype)
+
+                x_1 = rearrange(x_1,
+                                "b c (h ph) (w pw) -> b (h w) (c ph pw)",
+                                ph=2,
+                                pw=2)
                 # img, prompts = batch
                 # with torch.no_grad():
                 #     x_1 = vae.encode(img.to(accelerator.device).to(torch.float32))
@@ -393,32 +410,42 @@ def main():
                 #     x_1 = rearrange(x_1, "b c (h ph) (w pw) -> b (h w) (c ph pw)", ph=2, pw=2)
 
                 bs = x_1.shape[0]
-                t = torch.sigmoid(torch.randn((bs,), device=accelerator.device))
+                t = torch.sigmoid(
+                    torch.randn((bs, ), device=accelerator.device))
 
                 x_0 = torch.randn_like(x_1).to(accelerator.device)
                 x_t = (1 - t[:, None, None]) * x_1 + t[:, None, None] * x_0
                 bsz = x_1.shape[0]
-                guidance_vec = torch.full((x_t.shape[0],), 4, device=x_t.device, dtype=x_t.dtype)
+                guidance_vec = torch.full((x_t.shape[0], ),
+                                          4,
+                                          device=x_t.device,
+                                          dtype=x_t.dtype)
 
                 # Predict the noise residual and compute loss
-                model_pred = dit(img=x_t.to(weight_dtype),
-                                img_ids=inp['img_ids'].to(weight_dtype),
-                                txt=inp['txt'].to(weight_dtype),
-                                txt_ids=inp['txt_ids'].to(weight_dtype),
-                                y=inp['vec'].to(weight_dtype),
-                                timesteps=t.to(weight_dtype),
-                                guidance=guidance_vec.to(weight_dtype),)
+                model_pred = dit(
+                    img=x_t.to(weight_dtype),
+                    img_ids=inp['img_ids'].to(weight_dtype),
+                    txt=inp['txt'].to(weight_dtype),
+                    txt_ids=inp['txt_ids'].to(weight_dtype),
+                    y=inp['vec'].to(weight_dtype),
+                    timesteps=t.to(weight_dtype),
+                    guidance=guidance_vec.to(weight_dtype),
+                )
 
-                loss = F.mse_loss(model_pred.float(), (x_0 - x_1).float(), reduction="mean")
+                loss = F.mse_loss(model_pred.float(), (x_0 - x_1).float(),
+                                  reduction="mean")
 
                 # Gather the losses across all processes for logging (if we use distributed training).
-                avg_loss = accelerator.gather(loss.repeat(args.train_batch_size)).mean()
-                train_loss += avg_loss.item() / args.gradient_accumulation_steps
+                avg_loss = accelerator.gather(
+                    loss.repeat(args.train_batch_size)).mean()
+                train_loss += avg_loss.item(
+                ) / args.gradient_accumulation_steps
 
                 # Backpropagate
                 accelerator.backward(loss)
                 if accelerator.sync_gradients:
-                    accelerator.clip_grad_norm_(dit.parameters(), args.max_grad_norm)
+                    accelerator.clip_grad_norm_(dit.parameters(),
+                                                args.max_grad_norm)
                 optimizer.step()
                 lr_scheduler.step()
                 optimizer.zero_grad()
@@ -435,38 +462,56 @@ def main():
                         # _before_ saving state, check if this save would set us over the `checkpoints_total_limit`
                         if args.checkpoints_total_limit is not None:
                             checkpoints = os.listdir(args.output_dir)
-                            checkpoints = [d for d in checkpoints if d.startswith("checkpoint")]
-                            checkpoints = sorted(checkpoints, key=lambda x: int(x.split("-")[1]))
+                            checkpoints = [
+                                d for d in checkpoints
+                                if d.startswith("checkpoint")
+                            ]
+                            checkpoints = sorted(
+                                checkpoints,
+                                key=lambda x: int(x.split("-")[1]))
 
                             # before we save the new checkpoint, we need to have at _most_ `checkpoints_total_limit - 1` checkpoints
-                            if len(checkpoints) >= args.checkpoints_total_limit:
-                                num_to_remove = len(checkpoints) - args.checkpoints_total_limit + 1
-                                removing_checkpoints = checkpoints[0:num_to_remove]
+                            if len(checkpoints
+                                   ) >= args.checkpoints_total_limit:
+                                num_to_remove = len(
+                                    checkpoints
+                                ) - args.checkpoints_total_limit + 1
+                                removing_checkpoints = checkpoints[
+                                    0:num_to_remove]
 
                                 logger.info(
                                     f"{len(checkpoints)} checkpoints already exist, removing {len(removing_checkpoints)} checkpoints"
                                 )
-                                logger.info(f"removing checkpoints: {', '.join(removing_checkpoints)}")
+                                logger.info(
+                                    f"removing checkpoints: {', '.join(removing_checkpoints)}"
+                                )
 
                                 for removing_checkpoint in removing_checkpoints:
-                                    removing_checkpoint = os.path.join(args.output_dir, removing_checkpoint)
+                                    removing_checkpoint = os.path.join(
+                                        args.output_dir, removing_checkpoint)
                                     shutil.rmtree(removing_checkpoint)
 
-                    save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}")
+                    save_path = os.path.join(args.output_dir,
+                                             f"checkpoint-{global_step}")
 
                     accelerator.save_state(save_path)
-                    unwrapped_model_state = accelerator.unwrap_model(dit).state_dict()
+                    unwrapped_model_state = accelerator.unwrap_model(
+                        dit).state_dict()
 
                     # save checkpoint in safetensors format
-                    lora_state_dict = {k:unwrapped_model_state[k] for k in unwrapped_model_state.keys() if '_lora' in k}
-                    save_file(
-                        lora_state_dict,
-                        os.path.join(save_path, "lora.safetensors")
-                    )
+                    lora_state_dict = {
+                        k: unwrapped_model_state[k]
+                        for k in unwrapped_model_state.keys() if '_lora' in k
+                    }
+                    save_file(lora_state_dict,
+                              os.path.join(save_path, "lora.safetensors"))
 
                     logger.info(f"Saved state to {save_path}")
 
-            logs = {"step_loss": loss.detach().item(), "lr": lr_scheduler.get_last_lr()[0]}
+            logs = {
+                "step_loss": loss.detach().item(),
+                "lr": lr_scheduler.get_last_lr()[0]
+            }
             progress_bar.set_postfix(**logs)
 
             if global_step >= args.max_train_steps:
