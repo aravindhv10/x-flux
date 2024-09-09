@@ -191,21 +191,6 @@ def get_models(name: str, device, offload: bool, is_schnell: bool):
     return model, vae, t5, clip
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Simple example of a training script.")
-    parser.add_argument(
-        "--config",
-        type=str,
-        default=None,
-        required=True,
-        help="path to config",
-    )
-    args = parser.parse_args()
-
-    return args.config
-
-
 def main():
     create_embeddings_in_docker()
 

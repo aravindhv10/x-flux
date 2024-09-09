@@ -102,12 +102,13 @@ def remove_extension(path_input):
 
 
 def get_models(name: str, device, offload: bool, is_schnell: bool):
-    t5 = load_t5(device, max_length=256 if is_schnell else 512)
-    clip = load_clip(device)
-    clip.requires_grad_(False)
+    # t5 = load_t5(device, max_length=256 if is_schnell else 512)
+    # clip = load_clip(device)
+    # clip.requires_grad_(False)
     model = load_flow_model2(name, device="cpu")
-    vae = load_ae(name, device="cpu" if offload else device)
-    return model, vae, t5, clip
+    # vae = load_ae(name, device="cpu" if offload else device)
+    # return model, vae, t5, clip
+    return model
 
 
 def parse_args():
@@ -162,10 +163,10 @@ def main():
             os.makedirs(args.output_dir, exist_ok=True)
 
     # dit, vae, t5, clip = get_models(name=args.model_name, device=accelerator.device, offload=False, is_schnell=is_schnell)
-    dit, _, _, _ = get_models(name=args.model_name,
-                              device=accelerator.device,
-                              offload=False,
-                              is_schnell=is_schnell)
+    dit = get_models(name=args.model_name,
+                     device=accelerator.device,
+                     offload=False,
+                     is_schnell=is_schnell)
     lora_attn_procs = {}
 
     if args.double_blocks is None:

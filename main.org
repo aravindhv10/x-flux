@@ -249,18 +249,14 @@
 #+end_src
 
 #+RESULTS:
-#+begin_example
-On branch aravind_prodigy_dataset
-Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   image_datasets/dataset.py
-	modified:   train_flux_lora_deepspeed_cached.py
-
-no changes added to commit (use "git add" and/or "git commit -a")
-#+end_example
+: On branch aravind_prodigy_dataset
+: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+: 
+: Changes to be committed:
+:   (use "git restore --staged <file>..." to unstage)
+: 	modified:   main.org
+: 	modified:   train_flux_lora_deepspeed_cached.py
+: 
 
 
 #+RESULTS:
@@ -273,10 +269,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 4e26dba] Separated latent caching code from cached training code
-:  4 files changed, 248 insertions(+), 546 deletions(-)
-:  rewrite make_latent.py (68%)
-:  copy make_latent.py => train_flux_lora_deepspeed_cached.py (99%)
+: [aravind_prodigy_dataset 9830a15] Separated latent caching code from cached training code
+:  3 files changed, 29 insertions(+), 104 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -285,6 +279,12 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 #+RESULTS:
 #+begin_example
+commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 20:26:37 2024 +0530
+
+    Separated latent caching code from cached training code
+
 commit 4e26dba8f5933729265a2333d3884b9b88056864
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 19:12:35 2024 +0530
@@ -338,10 +338,4 @@ Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 11:13:10 2024 +0530
 
     Mostly done with latent generation
-
-commit e75f588ead3bd1f48352c3b13ae33dab5244738b
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Mon Sep 9 10:39:08 2024 +0530
-
-    Started working on latent caching
 #+end_example
