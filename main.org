@@ -229,6 +229,7 @@
 
 #+begin_src elisp
   (save-buffer)
+  (save-some-buffers)
   (org-babel-tangle)
   (shell-command "./work.sh")
 #+end_src
@@ -242,14 +243,14 @@
 
 #+RESULTS:
 : On branch aravind_prodigy_dataset
-: Your branch is ahead of 'origin/aravind_prodigy_dataset' by 3 commits.
-:   (use "git push" to publish your local commits)
+: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 : 
-: Changes to be committed:
-:   (use "git restore --staged <file>..." to unstage)
-: 	modified:   main.org
+: Changes not staged for commit:
+:   (use "git add <file>..." to update what will be committed)
+:   (use "git restore <file>..." to discard changes in working directory)
 : 	modified:   make_latent.py
 : 
+: no changes added to commit (use "git add" and/or "git commit -a")
 
 
 #+RESULTS:

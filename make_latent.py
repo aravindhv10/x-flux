@@ -86,6 +86,11 @@ def load_vae(name='flux-dev'):
     return vae
 
 
+def get_embedding(path_image, auto_encoder):
+    image = load_image(path=path_image)
+    x_1 = auto_encoder.encode(image.to('cuda').to(torch.float16)).squeeze(0)
+
+
 class image_to_ae_safetensors:
 
     def __init__(self, name='flux-dev'):
@@ -93,9 +98,8 @@ class image_to_ae_safetensors:
         self.vae.requires_grad_(False)
 
     def process_image(self, path_image, path_output):
-        img = load_image(path=path_image)
-        x_1 = self.vae.encode(img.to('cuda').to(torch.float16)).squeeze(0)
-        out = {'encoded_image': x_1}
+        embedding = get_embedding(path_image=path_image, auto_encoder=self.vae)
+        out = {'encoded_image': embedding}
         save_file(out, path_output)
 
 
@@ -116,10 +120,7 @@ class text_embedders:
         ae_latent = load_file(ae_sft_path)['encoded_image'].unsqueeze(0)
         prompt = open(prompt_path, 'r', encoding='utf-8').read()
 
-        inp = prepare(t5=self.t5,
-                      clip=self.clip,
-                      img=ae_latent,
-                      prompt=prompt)
+        inp = prepare(t5=self.t5, clip=self.clip, img=ae_latent, prompt=prompt)
 
         save_file(inp, output_path)
 
