@@ -35,6 +35,7 @@
   new/train_flux_lora_deepspeed.org
   train_flux_lora_deepspeed.py
   train_flux_lora_deepspeed_cached.py
+  make_latent_2.py
 #+end_src
 
 #+begin_src conf :tangle ./rm.txt
@@ -52,6 +53,8 @@
   work.sh
   .train_flux_lora_deepspeed_cached.py.~undo-tree~
   train_flux_lora_deepspeed_cached.py~
+  .make_latent_2.py.~undo-tree~
+  make_latent_2.py~
 #+end_src
 
 #+begin_src conf :tangle ./gitignore
@@ -249,14 +252,19 @@
 #+end_src
 
 #+RESULTS:
-: On branch aravind_prodigy_dataset
-: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-: 
-: Changes to be committed:
-:   (use "git restore --staged <file>..." to unstage)
-: 	modified:   main.org
-: 	modified:   train_flux_lora_deepspeed_cached.py
-: 
+#+begin_example
+On branch aravind_prodigy_dataset
+Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   main.org
+	new file:   make_latent_2.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+#+end_example
 
 
 #+RESULTS:

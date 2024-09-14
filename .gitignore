@@ -71,6 +71,8 @@ local_settings.py
 /main.org~
 /.main.org.~undo-tree~
 Makefile
+/make_latent_2.py~
+/.make_latent_2.py.~undo-tree~
 /make_latent.py~
 /.make_latent.py.~undo-tree~
 *.manifest
