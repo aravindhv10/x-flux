@@ -27,6 +27,7 @@ dist/
 # Django stuff:
 .dmypy.json
 dmypy.json
+/docker/#README.org#
 docs/_build/
 downloads/
 .DS_Store

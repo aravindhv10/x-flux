@@ -1,0 +1,352 @@
+* Interesting video:
+https://www.youtube.com/watch?v=bTv28MYHEfY
+
+* Good batch size for A100:
+5
+
+* COMMENT TO TRY
+
+** accelerate config
+** prodigyopt with accelerate
+** Write custom data loader
+
+* COMMENT WORK SPACE
+#+begin_src elisp
+  (save-buffer)
+  (org-babel-tangle)
+#+end_src
+
+#+RESULTS:
+| ./Dockerfile | ./default_config.yaml.new2 | ./default_config.yaml | ./default_config.yaml.bad | ./default_config.yaml.good | ./default_config.yaml.aggressive | ./train.sh | ./run.sh | ./run_interactive.sh | ./build.sh |
+
+#+begin_src sh :shebang #!/bin/sh :results output 
+  realpath .
+#+end_src
+
+cd /home/asd/GITHUB/aravind-h-v/dreambooth_experiments/flux_train_docker/x-flux
+
+#+begin_src sh :shebang #!/bin/sh :results output 
+  docker pull 'pytorch/pytorch:2.4.0-cuda12.4-cudnn9-devel'
+#+end_src
+
+* Docker build
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./build.sh
+  cd "$('dirname' '--' "${0}")"
+
+  cp '../../important_functions.sh' './'
+
+  IMAGE_NAME='flux_train_xflux'
+  CONTAINER_NAME="${IMAGE_NAME}_1"
+
+  sudo docker image build \
+      -t "${IMAGE_NAME}" \
+      . \
+  ;
+#+end_src
+
+* Run plain torch image
+#+begin_src sh :shebang #!/bin/sh :results output
+  IMAGE_NAME='pytorch/pytorch:2.4.0-cuda12.4-cudnn9-devel'
+  CONTAINER_NAME="${IMAGE_NAME}_1"
+
+  sudo docker run \
+      --tty \
+      --interactive \
+      --rm \
+      --gpus all \
+      --ipc host \
+      --ulimit memlock=-1 \
+      --ulimit stack=67108864 \
+      "${IMAGE_NAME}" \
+      /bin/bash \
+  ;
+#+end_src
+
+* Docker run interactive
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./run_interactive.sh
+  mkdir -pv -- "${2}"
+
+  IMAGE_NAME='flux_train_xflux'
+  CONTAINER_NAME="${IMAGE_NAME}_1"
+
+  sudo docker run \
+      --tty \
+      --interactive \
+      --rm \
+      --gpus all \
+      --ipc host \
+      --ulimit memlock=-1 \
+      --ulimit stack=67108864 \
+      -v "$(realpath "${1}"):/data/input" \
+      -v "$(realpath "${2}"):/data/output" \
+      -v "CACHE:/root/.cache" \
+      "${IMAGE_NAME}" \
+      /bin/bash \
+  ;
+#+end_src
+
+* Docker run
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./run.sh
+  mkdir -pv -- "${2}"
+
+  IMAGE_NAME='flux_train_xflux'
+  CONTAINER_NAME="${IMAGE_NAME}_1"
+
+  sudo docker run \
+      --tty \
+      --interactive \
+      --rm \
+      --gpus all \
+      --ipc host \
+      --ulimit memlock=-1 \
+      --ulimit stack=67108864 \
+      -v "$(realpath "${1}"):/data/input" \
+      -v "$(realpath "${2}"):/data/output" \
+      -v "CACHE:/root/.cache" \
+      "${IMAGE_NAME}" \
+      '/root/train.sh' \
+  ;
+#+end_src
+
+* Script to run training inside container
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./train.sh
+  mkdir -pv -- "${HOME}/.cache/huggingface/accelerate/"
+
+  test -e '/data/input/default_config.yaml' && \
+      cp -vf -- '/data/input/default_config.yaml' "${HOME}/default_config.yaml" ;
+
+  cp -vf -- "${HOME}/default_config.yaml" \
+      "${HOME}/.cache/huggingface/accelerate/default_config.yaml" ;
+
+  ln -vfs "${HOME}/GITHUB/aravindhv10/x-flux" "${HOME}/"
+
+  cd "${HOME}/x-flux"
+
+  if test -e '/data/input/test_lora.yaml'
+
+      then
+
+          test -e '/root/.cache/huggingface/token' || huggingface-cli login
+          mkdir -pv -- '/data/output/lora'
+          cp -vf -- '/data/input/test_lora.yaml' './train_configs/test_lora.yaml'
+          rm -vf -- './images' './lora'
+          ln -vfs -- '/data/input' './images'
+          ln -vfs -- '/data/output/lora' './'
+          accelerate launch \
+              './make_latent_2.py' \
+          ;
+
+          accelerate launch \
+              ./train_flux_lora_controlnet_deepspeed_cached.py \
+              --config './train_configs/test_lora.yaml' \
+          ;
+
+      else
+
+          echo 'No config file found, copying the sample file and exiting. Edit the example file in the input folder and run again.'
+
+          cp -vf -- './train_configs/test_lora.yaml' '/data/input/test_lora.yaml'
+
+  fi
+#+end_src
+
+* Accelerate config aggressive
+#+begin_src conf :tangle ./default_config.yaml.aggressive
+  compute_environment: LOCAL_MACHINE
+  debug: false
+  deepspeed_config:
+    gradient_accumulation_steps: 1
+    offload_optimizer_device: cpu
+    offload_param_device: cpu
+    zero3_init_flag: true
+    zero3_save_16bit_model: true
+    zero_stage: 3
+  distributed_type: DEEPSPEED
+  downcast_bf16: 'no'
+  dynamo_config:
+    dynamo_backend: INDUCTOR
+  enable_cpu_affinity: false
+  machine_rank: 0
+  main_training_function: main
+  mixed_precision: fp8
+  num_machines: 1
+  num_processes: 1
+  rdzv_backend: static
+  same_network: true
+  tpu_env: []
+  tpu_use_cluster: false
+  tpu_use_sudo: false
+  use_cpu: false
+#+end_src
+
+* Accelerate config good
+#+begin_src conf :tangle ./default_config.yaml.good
+  compute_environment: LOCAL_MACHINE
+  debug: false
+  deepspeed_config:
+    gradient_accumulation_steps: 1
+    offload_optimizer_device: cpu
+    offload_param_device: cpu
+    zero3_init_flag: false
+    zero3_save_16bit_model: true
+    zero_stage: 3
+  distributed_type: DEEPSPEED
+  downcast_bf16: 'no'
+  dynamo_config:
+    dynamo_backend: INDUCTOR
+  enable_cpu_affinity: false
+  machine_rank: 0
+  main_training_function: main
+  mixed_precision: fp8
+  num_machines: 1
+  num_processes: 1
+  rdzv_backend: static
+  same_network: true
+  tpu_env: []
+  tpu_use_cluster: false
+  tpu_use_sudo: false
+  use_cpu: false
+#+end_src
+
+* Accelerate config
+#+begin_src conf :tangle ./default_config.yaml.bad
+  compute_environment: LOCAL_MACHINE
+  debug: false
+  deepspeed_config:
+    gradient_accumulation_steps: 1
+    offload_optimizer_device: cpu
+    offload_param_device: cpu
+    zero3_init_flag: false
+    zero3_save_16bit_model: true
+    zero_stage: 3
+  distributed_type: DEEPSPEED
+  downcast_bf16: 'no'
+  dynamo_config:
+    dynamo_backend: INDUCTOR
+  enable_cpu_affinity: false
+  machine_rank: 0
+  main_training_function: main
+  mixed_precision: bf16
+  num_machines: 1
+  num_processes: 1
+  rdzv_backend: static
+  same_network: true
+  tpu_env: []
+  tpu_use_cluster: false
+  tpu_use_sudo: false
+  use_cpu: false
+#+end_src
+
+  mixed_precision: bf16
+  mixed_precision: fp8
+
+* accelerate config testing
+
+** 1
+2.7 s / it
+loss -> 0.26
+batch -> 2
+#+begin_src conf :tangle ./default_config.yaml
+  compute_environment: LOCAL_MACHINE
+  debug: false
+  deepspeed_config:
+    gradient_accumulation_steps: 1
+    offload_optimizer_device: none
+    offload_param_device: none
+    zero3_init_flag: false
+    zero_stage: 2
+  distributed_type: DEEPSPEED
+  downcast_bf16: 'no'
+  dynamo_config:
+    dynamo_backend: INDUCTOR
+  enable_cpu_affinity: false
+  machine_rank: 0
+  main_training_function: main
+  mixed_precision: bf16
+  num_machines: 1
+  num_processes: 1
+  rdzv_backend: static
+  same_network: true
+  tpu_env: []
+  tpu_use_cluster: false
+  tpu_use_sudo: false
+  use_cpu: false
+#+end_src
+
+** 2 
+#+begin_src conf :tangle ./default_config.yaml.new2
+  compute_environment: LOCAL_MACHINE
+  debug: false
+  distributed_type: 'NO'
+  downcast_bf16: 'no'
+  dynamo_config:
+    dynamo_backend: INDUCTOR
+  enable_cpu_affinity: false
+  gpu_ids: all
+  machine_rank: 0
+  main_training_function: main
+  mixed_precision: bf16
+  num_machines: 1
+  num_processes: 1
+  rdzv_backend: static
+  same_network: true
+  tpu_env: []
+  tpu_use_cluster: false
+  tpu_use_sudo: false
+  use_cpu: false
+#+end_src
+
+
+* Main dockerfile
+#+begin_src conf :tangle ./Dockerfile
+  FROM pytorch/pytorch:2.4.0-cuda12.4-cudnn9-devel
+
+  ENV HOME='/root'
+  ENV DEBIAN_FRONTEND='noninteractive'
+
+  RUN apt-get update && apt-get install -y \
+      git \
+      aria2 \
+      libgl1 \
+      libglib2.0-0 \
+      libsm6 \
+      libxext6 \
+      libxrender1 \
+  ;
+
+  RUN conda install --yes \
+      conda-forge::timm \
+      pytorch::torchvision \
+      conda-forge::onnxruntime \
+      conda-forge::matplotlib \
+      conda-forge::opencv \
+      conda-forge::sentencepiece \
+      conda-forge::omegaconf \
+  ;
+
+  RUN --mount=type=cache,target=/root/.cache pip install \
+      accelerate==0.30.1 \
+      deepspeed==0.14.4 \
+      einops==0.8.0 \
+      transformers==4.43.3 \
+      huggingface-hub==0.24.5 \
+      optimum-quanto \
+      datasets \
+      diffusers \
+      prodigyopt \
+  ;
+
+  COPY ./important_functions.sh /root/important_functions.sh
+
+  # RUN . "${HOME}/important_functions.sh" ; \
+  #     get_repo 'https://github.com/XLabs-AI/x-flux.git' main ;
+
+  RUN . "${HOME}/important_functions.sh" ; \
+      get_repo 'https://github.com/aravindhv10/x-flux/' 'aravind_prodigy_dataset' '54ed13998360f2ef4ae53bda044140b4f434c84a' ; 
+
+
+  RUN mkdir -pv -- /data/input /data/output
+
+  COPY './default_config.yaml' '/root/default_config.yaml'
+  COPY './train.sh' '/root/train.sh'
+#+end_src

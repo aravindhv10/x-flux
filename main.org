@@ -39,6 +39,18 @@
   image_datasets/canny_dataset.py
   make_latent_2.py
   train_flux_lora_controlnet_deepspeed_cached.py
+  docker/train.sh
+  docker/default_config.yaml
+  docker/default_config.yaml.good
+  docker/default_config.yaml.aggressive
+  docker/default_config.yaml.new2
+  docker/README.org
+  docker/Dockerfile
+  docker/run.sh
+  docker/default_config.yaml.new
+  docker/default_config.yaml.bad
+  docker/run_interactive.sh
+  docker/build.sh
 #+end_src
 
 #+begin_src conf :tangle ./rm.txt
@@ -62,6 +74,7 @@
   .train_flux_lora_controlnet_deepspeed_cached.py.~undo-tree~
   train_flux_lora_controlnet_deepspeed_cached.py~
   .train_flux_deepspeed_controlnet.py.~undo-tree~
+  docker/#README.org#
 #+end_src
 
 #+begin_src conf :tangle ./gitignore
@@ -262,11 +275,10 @@
 : On branch aravind_prodigy_dataset
 : Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 : 
-: Changes to be committed:
-:   (use "git restore --staged <file>..." to unstage)
-: 	modified:   image_datasets/canny_dataset.py
-: 	modified:   main.org
+: Untracked files:
+:   (use "git add <file>..." to include in what will be committed)
 : 
+: nothing added to commit but untracked files present (use "git add" to track)
 
 
 #+RESULTS:
@@ -279,8 +291,8 @@
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 3fbb89a] New net test
-:  2 files changed, 10 insertions(+), 8 deletions(-)
+: [aravind_prodigy_dataset 54ed139] New net test
+:  2 files changed, 11 insertions(+), 9 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -290,6 +302,12 @@
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 14:36:27 2024 +0530
+
+    New net test
+
+commit 3fbb89a8164aad8e4297a18e5fe8d3be1d17c366
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:31:00 2024 +0530
 
@@ -340,12 +358,6 @@ Date:   Sun Sep 15 14:08:40 2024 +0530
 commit b058d091c80dde7f3e7aca205b9bc8b92511adea
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:05:35 2024 +0530
-
-    New net test
-
-commit e0f0bd503f3a63f76eb09808b299257f9c2baa30
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:01:38 2024 +0530
 
     New net test
 #+end_example
