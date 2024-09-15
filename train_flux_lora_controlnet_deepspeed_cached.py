@@ -53,8 +53,9 @@ from diffusers.utils.import_utils import is_xformers_available
 from diffusers.utils.torch_utils import is_compiled_module
 from einops import rearrange
 from src.flux.sampling import denoise, get_noise, get_schedule, prepare, unpack
-from src.flux.util import (configs, load_ae, load_clip, load_flow_model2,
-                           load_t5)
+from src.flux.util import (configs, load_ae, load_clip, load_controlnet,
+                           load_flow_model2, load_t5)
+
 from src.flux.modules.layers import DoubleStreamBlockLoraProcessor, SingleStreamBlockLoraProcessor
 
 from image_datasets.dataset import loader, loader_mine

@@ -138,6 +138,7 @@ share/python-wheels/
 target/
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
 .tox/
+/.train_flux_deepspeed_controlnet.py.~undo-tree~
 /train_flux_lora_controlnet_deepspeed_cached.py~
 /.train_flux_lora_controlnet_deepspeed_cached.py.~undo-tree~
 /train_flux_lora_deepspeed_cached.py~
