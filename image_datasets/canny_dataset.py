@@ -120,6 +120,8 @@ class CustomImageDataset_cached(Dataset):
         try:
             hint = Image.open(self.list_path_control[idx])
             hint = c_crop_2(hint)
+            hint = hint.resize((1024, 1024), Image.Resampling.LANCZOS)
+
             hint = torch.from_numpy((np.array(hint) / 127.5) - 1)
             hint = hint.permute(2, 0, 1)
             ae = load_file(self.list_path_image[idx])['encoded_image']
