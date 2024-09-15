@@ -259,20 +259,15 @@
 #+end_src
 
 #+RESULTS:
-#+begin_example
-On branch aravind_prodigy_dataset
-Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	modified:   main.org
-	modified:   train_flux_lora_controlnet_deepspeed_cached.py
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	
-
-#+end_example
+: On branch aravind_prodigy_dataset
+: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+: 
+: Changes not staged for commit:
+:   (use "git add <file>..." to update what will be committed)
+:   (use "git restore <file>..." to discard changes in working directory)
+: 	modified:   image_datasets/canny_dataset.py
+: 
+: no changes added to commit (use "git add" and/or "git commit -a")
 
 
 #+RESULTS:
@@ -285,9 +280,8 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset ce0c887] Started work on controlnet + lora unified trainer
-:  5 files changed, 605 insertions(+), 33 deletions(-)
-:  create mode 100644 train_flux_lora_controlnet_deepspeed_cached.py
+: [aravind_prodigy_dataset 06addbf] Started work on controlnet + lora unified trainer
+:  3 files changed, 26 insertions(+), 12 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -297,6 +291,12 @@ Untracked files:
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 12:54:37 2024 +0530
+
+    Started work on controlnet + lora unified trainer
+
+commit ce0c8877ac1a3e9b35637de9b72c000ec48c8a0e
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 11:45:17 2024 +0530
 
@@ -347,12 +347,6 @@ Date:   Mon Sep 9 17:04:54 2024 +0530
 commit 19b6fa1356ce07d3da8d3b81894b90edf5399e73
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 16:30:18 2024 +0530
-
-    Fixed batching issue in autoencoder latent
-
-commit e86b043fca267d703e17c0ce7bf6b5db16db224f
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Mon Sep 9 15:31:34 2024 +0530
 
     Fixed batching issue in autoencoder latent
 #+end_example

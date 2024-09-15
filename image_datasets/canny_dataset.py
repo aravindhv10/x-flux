@@ -95,11 +95,11 @@ class CustomImageDataset(Dataset):
 
 class CustomImageDataset_cached(Dataset):
 
-    def __init__(self, img_size=1024):
+    def __init__(self, img_dir='/data/input', img_size=1024):
 
         self.img_size = img_size
 
-        list_path_image = get_main_image_files(path_dir_input='/data/input')
+        list_path_image = get_main_image_files(path_dir_input=img_dir)
         list_path_image.sort()
 
         self.list_path_control = list(
