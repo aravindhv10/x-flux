@@ -30,7 +30,7 @@ import torch.nn as nn
 
 class MyNet(nn.Module):
 
-    def __init__(self):
+    def __init__(self, args):
         super(MyNet, self).__init__()
         # The network has two fully connected layers
         self.dit = get_models(name=args.model_name,
@@ -184,7 +184,7 @@ def main():
 
     # dit, vae, t5, clip = get_models(name=args.model_name, device=accelerator.device, offload=False, is_schnell=is_schnell)
 
-    main_net = MyNet()
+    main_net = MyNet(args)
     main_net.dit = get_models(name=args.model_name,
                               device=accelerator.device,
                               offload=False,

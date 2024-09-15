@@ -273,14 +273,14 @@
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Started work on controlnet + lora unified trainer'
+  git commit -m 'New net test'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 12e7f9f] Started work on controlnet + lora unified trainer
-:  2 files changed, 19 insertions(+), 25 deletions(-)
+: [aravind_prodigy_dataset e0f0bd5] New net test
+:  2 files changed, 61 insertions(+), 36 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -290,6 +290,12 @@
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 14:01:38 2024 +0530
+
+    New net test
+
+commit 12e7f9fa5bccddc77c8a7e1d06baaa6ed0674feb
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 12:59:15 2024 +0530
 
@@ -340,12 +346,6 @@ Date:   Mon Sep 9 17:18:05 2024 +0530
 commit c689f764ad0d972424697ca668190018493b6333
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 17:13:19 2024 +0530
-
-    Fixed device issue while training
-
-commit 92ce8d2733176305d07dedbbe4cea8ec5dc9f97a
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Mon Sep 9 17:04:54 2024 +0530
 
     Fixed device issue while training
 #+end_example
