@@ -33,8 +33,6 @@ cd /home/asd/GITHUB/aravind-h-v/dreambooth_experiments/flux_train_docker/x-flux
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./build.sh
   cd "$('dirname' '--' "${0}")"
 
-  cp '../../important_functions.sh' './'
-
   IMAGE_NAME='flux_train_xflux'
   CONTAINER_NAME="${IMAGE_NAME}_1"
 

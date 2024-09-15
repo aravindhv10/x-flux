@@ -28,6 +28,7 @@ dist/
 .dmypy.json
 dmypy.json
 /docker/#README.org#
+/docker/.README.org.~undo-tree~
 docs/_build/
 downloads/
 .DS_Store

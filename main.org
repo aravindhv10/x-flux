@@ -51,6 +51,7 @@
   docker/default_config.yaml.bad
   docker/run_interactive.sh
   docker/build.sh
+  docker/important_functions.sh
 #+end_src
 
 #+begin_src conf :tangle ./rm.txt
@@ -75,6 +76,7 @@
   train_flux_lora_controlnet_deepspeed_cached.py~
   .train_flux_deepspeed_controlnet.py.~undo-tree~
   docker/#README.org#
+  docker/.README.org.~undo-tree~
 #+end_src
 
 #+begin_src conf :tangle ./gitignore
@@ -272,28 +274,51 @@
 #+end_src
 
 #+RESULTS:
-: On branch aravind_prodigy_dataset
-: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-: 
-: Untracked files:
-:   (use "git add <file>..." to include in what will be committed)
-: 
-: nothing added to commit but untracked files present (use "git add" to track)
+#+begin_example
+On branch aravind_prodigy_dataset
+Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   docker/README.org
+	modified:   docker/build.sh
+	new file:   docker/important_functions.sh
+	modified:   main.org
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	
+
+#+end_example
 
 
 #+RESULTS:
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'New net test'
+  git commit -m 'Added docker scripts'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 54ed139] New net test
-:  2 files changed, 11 insertions(+), 9 deletions(-)
-: Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
+#+begin_example
+[aravind_prodigy_dataset e884125] Added docker scripts
+ 14 files changed, 660 insertions(+), 12 deletions(-)
+ create mode 100644 docker/Dockerfile
+ create mode 100644 docker/README.org
+ create mode 100755 docker/build.sh
+ create mode 100644 docker/default_config.yaml
+ create mode 100644 docker/default_config.yaml.aggressive
+ create mode 100644 docker/default_config.yaml.bad
+ create mode 100644 docker/default_config.yaml.good
+ create mode 100644 docker/default_config.yaml.new
+ create mode 100644 docker/default_config.yaml.new2
+ create mode 100755 docker/run.sh
+ create mode 100755 docker/run_interactive.sh
+ create mode 100755 docker/train.sh
+Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
+#+end_example
 
 #+begin_src sh :shebang #!/bin/sh :results output 
   git log -n 10
