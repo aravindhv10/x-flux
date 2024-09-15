@@ -279,7 +279,7 @@
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 7bc7355] New net test
+: [aravind_prodigy_dataset 024c0b5] New net test
 :  2 files changed, 9 insertions(+), 9 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
@@ -290,6 +290,12 @@
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 14:20:21 2024 +0530
+
+    New net test
+
+commit 7bc73556cf4e2e18c3ee3bf39e64426b4ceb1259
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:16:33 2024 +0530
 
@@ -342,10 +348,4 @@ Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sat Sep 14 22:57:38 2024 +0530
 
     Wrote code to generate latent for new type dataset
-
-commit dd420a7e05e0a4f538057e07491d2e900871cfa2
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Mon Sep 9 21:48:31 2024 +0530
-
-    Separated latent caching code from cached training code
 #+end_example

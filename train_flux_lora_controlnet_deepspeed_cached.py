@@ -201,7 +201,7 @@ def main():
     main_net.controlnet = load_controlnet(name=args.model_name,
                                           device=accelerator.device,
                                           transformer=main_net.dit)
-    main_net.controlnet = controlnet.to(torch.float32)
+    main_net.controlnet = main_net.controlnet.to(torch.float32)
     main_net.controlnet.train()
 
     lora_attn_procs = {}
