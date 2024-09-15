@@ -187,7 +187,7 @@ def main():
 
     # dit, vae, t5, clip = get_models(name=args.model_name, device=accelerator.device, offload=False, is_schnell=is_schnell)
 
-    main_net = MyNet(args, accelerat.device)
+    main_net = MyNet()
     main_net.dit = get_models(name=args.model_name,
                               device=accelerator.device,
                               offload=False,
