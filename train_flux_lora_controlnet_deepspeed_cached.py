@@ -25,6 +25,24 @@ from pathlib import Path
 from safetensors.torch import save_file
 from safetensors.torch import load_file
 
+import torch.nn as nn
+
+
+class MyNet(nn.Module):
+
+    def __init__(self):
+        super(MyNet, self).__init__()
+        # The network has two fully connected layers
+        self.dit = get_models(name=args.model_name,
+                              device=accelerator.device,
+                              offload=False,
+                              is_schnell=is_schnell)
+
+        self.controlnet = load_controlnet(name=args.model_name,
+                                          device=accelerator.device,
+                                          transformer=dit)
+
+
 import accelerate
 import datasets
 import numpy as np
@@ -165,16 +183,23 @@ def main():
             os.makedirs(args.output_dir, exist_ok=True)
 
     # dit, vae, t5, clip = get_models(name=args.model_name, device=accelerator.device, offload=False, is_schnell=is_schnell)
-    dit = get_models(name=args.model_name,
-                     device=accelerator.device,
-                     offload=False,
-                     is_schnell=is_schnell)
 
-    controlnet = load_controlnet(name=args.model_name,
-                                 device=accelerator.device,
-                                 transformer=dit)
-    controlnet = controlnet.to(torch.float32)
-    controlnet.train()
+    main_net = MyNet()
+    main_net.dit = get_models(name=args.model_name,
+                              device=accelerator.device,
+                              offload=False,
+                              is_schnell=is_schnell)
+
+    # dit = get_models(name=args.model_name,
+    #                  device=accelerator.device,
+    #                  offload=False,
+    #                  is_schnell=is_schnell)
+
+    main_net.controlnet = load_controlnet(name=args.model_name,
+                                          device=accelerator.device,
+                                          transformer=dit)
+    main_net.controlnet = controlnet.to(torch.float32)
+    main_net.controlnet.train()
 
     lora_attn_procs = {}
     if args.double_blocks is None:
@@ -205,23 +230,23 @@ def main():
         else:
             lora_attn_procs[name] = attn_processor
 
-    dit.set_attn_processor(lora_attn_procs)
+    main_net.dit.set_attn_processor(lora_attn_procs)
 
     # vae.requires_grad_(False)
     # t5.requires_grad_(False)
     # clip.requires_grad_(False)
-    dit = dit.to(torch.float32)
-    dit.train()
+    main_net.dit = main_net.dit.to(torch.float32)
+    main_net.dit.train()
     # optimizer_cls = torch.optim.AdamW
     optimizer_cls = Prodigy
-    for n, param in dit.named_parameters():
+    for n, param in main_net.dit.named_parameters():
         if '_lora' not in n:
             param.requires_grad = False
         else:
             print(n)
     print(
         sum([p.numel()
-             for p in dit.parameters() if p.requires_grad]) / 1000000,
+             for p in main_net.dit.parameters() if p.requires_grad]) / 1000000,
         'parameters')
 
     # optimizer = optimizer_cls(
@@ -233,8 +258,8 @@ def main():
     # )
 
     optimizer = optimizer_cls(
-        [p for p in dit.parameters() if p.requires_grad] +
-        [p for p in controlnet.parameters() if p.requires_grad],
+        [p for p in main_net.dit.parameters() if p.requires_grad] +
+        [p for p in main_net.controlnet.parameters() if p.requires_grad],
         lr=1,
         weight_decay=args.adam_weight_decay,
     )
@@ -257,8 +282,8 @@ def main():
     global_step = 0
     first_epoch = 0
 
-    controlnet, dit, optimizer, _, lr_scheduler = accelerator.prepare(
-        controlnet, dit, optimizer, deepcopy(train_dataloader), lr_scheduler)
+    main_net, optimizer, _, lr_scheduler = accelerator.prepare(
+        main_net, optimizer, deepcopy(train_dataloader), lr_scheduler)
 
     weight_dtype = torch.float32
     if accelerator.mixed_precision == "fp16":
@@ -327,7 +352,7 @@ def main():
     for epoch in range(first_epoch, args.num_train_epochs):
         train_loss = 0.0
         for step, batch in enumerate(train_dataloader):
-            with accelerator.accumulate(dit):
+            with accelerator.accumulate(main_net.dit):
                 x_1, control_image, inp = batch
                 control_image = control_image.to(accelerator.device)
                 x_1 = x_1.to(device=accelerator.device, dtype=weight_dtype)
@@ -357,7 +382,7 @@ def main():
                                           device=x_t.device,
                                           dtype=x_t.dtype)
 
-                block_res_samples = controlnet(
+                block_res_samples = main_net.controlnet(
                     img=x_t.to(weight_dtype),
                     img_ids=inp['img_ids'].to(weight_dtype),
                     controlnet_cond=control_image.to(weight_dtype),
@@ -369,7 +394,7 @@ def main():
                 )
 
                 # Predict the noise residual and compute loss
-                model_pred = dit(
+                model_pred = main_net.dit(
                     img=x_t.to(weight_dtype),
                     img_ids=inp['img_ids'].to(weight_dtype),
                     txt=inp['txt'].to(weight_dtype),
@@ -395,7 +420,7 @@ def main():
                 # Backpropagate
                 accelerator.backward(loss)
                 if accelerator.sync_gradients:
-                    accelerator.clip_grad_norm_(dit.parameters(),
+                    accelerator.clip_grad_norm_(main_net.dit.parameters(),
                                                 args.max_grad_norm)
                 optimizer.step()
                 lr_scheduler.step()
@@ -446,9 +471,10 @@ def main():
                                              f"checkpoint-{global_step}")
 
                     accelerator.save_state(save_path)
-                    unwrapped_model = accelerator.unwrap_model(controlnet)
+                    unwrapped_model = accelerator.unwrap_model(
+                        main_net.controlnet)
                     unwrapped_model_state = accelerator.unwrap_model(
-                        dit).state_dict()
+                        main_net.dit).state_dict()
 
                     torch.save(unwrapped_model.state_dict(),
                                os.path.join(save_path, 'controlnet.bin'))
