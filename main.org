@@ -36,6 +36,9 @@
   train_flux_lora_deepspeed.py
   train_flux_lora_deepspeed_cached.py
   make_latent_2.py
+  image_datasets/canny_dataset.py
+  make_latent_2.py
+  train_flux_lora_controlnet_deepspeed_cached.py
 #+end_src
 
 #+begin_src conf :tangle ./rm.txt
@@ -55,6 +58,9 @@
   train_flux_lora_deepspeed_cached.py~
   .make_latent_2.py.~undo-tree~
   make_latent_2.py~
+  image_datasets/.canny_dataset.py.~undo-tree~
+  .train_flux_lora_controlnet_deepspeed_cached.py.~undo-tree~
+  train_flux_lora_controlnet_deepspeed_cached.py~
 #+end_src
 
 #+begin_src conf :tangle ./gitignore
@@ -253,16 +259,6 @@
 
 #+RESULTS:
 #+begin_example
-On branch aravind_prodigy_dataset
-Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	modified:   main.org
-	new file:   make_latent_2.py
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
 
 #+end_example
 
@@ -271,14 +267,15 @@ Untracked files:
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Separated latent caching code from cached training code'
+  git commit -m 'Wrote code to generate latent for new type dataset'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 9830a15] Separated latent caching code from cached training code
-:  3 files changed, 29 insertions(+), 104 deletions(-)
+: [aravind_prodigy_dataset 7734cec] Wrote code to generate latent for new type dataset
+:  3 files changed, 228 insertions(+), 8 deletions(-)
+:  create mode 100644 make_latent_2.py
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -287,7 +284,19 @@ Untracked files:
 
 #+RESULTS:
 #+begin_example
-commit 
+commit 7734cecc27134bc0059cc61a4127bc3ff95a63ab
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sat Sep 14 22:57:38 2024 +0530
+
+    Wrote code to generate latent for new type dataset
+
+commit dd420a7e05e0a4f538057e07491d2e900871cfa2
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Mon Sep 9 21:48:31 2024 +0530
+
+    Separated latent caching code from cached training code
+
+commit 9830a15956b326eab69bcd174e4052d5eba8bc96
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 20:26:37 2024 +0530
 
@@ -334,16 +343,4 @@ Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Mon Sep 9 15:22:38 2024 +0530
 
     Fixed batching issue in autoencoder latent
-
-commit 7f70c9fe6e8555be290e411aefea50075112260a
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Mon Sep 9 14:37:42 2024 +0530
-
-    Mostly completing latent caching
-
-commit 4b1062ac5e04825527e2863858e0accff40a1097
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Mon Sep 9 11:13:10 2024 +0530
-
-    Mostly done with latent generation
 #+end_example

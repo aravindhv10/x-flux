@@ -69,11 +69,16 @@ logger = get_logger(__name__, log_level="INFO")
 
 def c_crop(image):
     width, height = image.size
-    new_size = min(width, height)
-    left = (width - new_size) / 2
-    top = (height - new_size) / 2
-    right = (width + new_size) / 2
-    bottom = (height + new_size) / 2
+    new_size = max(width, height)
+    # left = (width - new_size) / 2
+    # top = (height - new_size) / 2
+    # right = (width + new_size) / 2
+    # bottom = (height + new_size) / 2
+
+    left = 0
+    top = 0
+    right = new_size
+    bottom = new_size
     return image.crop((left, top, right, bottom))
 
 
