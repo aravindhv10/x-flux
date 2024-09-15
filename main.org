@@ -265,7 +265,6 @@
 : Changes to be committed:
 :   (use "git restore --staged <file>..." to unstage)
 : 	modified:   main.org
-: 	modified:   train_flux_lora_controlnet_deepspeed_cached.py
 : 
 
 
@@ -279,8 +278,8 @@
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 1d134f5] New net test
-:  2 files changed, 8 insertions(+), 8 deletions(-)
+: [aravind_prodigy_dataset 5dba495] New net test
+:  1 file changed, 8 insertions(+), 8 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -290,6 +289,12 @@
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 14:24:57 2024 +0530
+
+    New net test
+
+commit 1d134f5a1946ed2eecdaf1b3a92046e2e7ce98cf
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:22:39 2024 +0530
 
@@ -340,12 +345,6 @@ Date:   Sun Sep 15 12:59:15 2024 +0530
 commit 06addbfbeaa758ca7ee6809305f2f1faee9ca4b7
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 12:54:37 2024 +0530
-
-    Started work on controlnet + lora unified trainer
-
-commit ce0c8877ac1a3e9b35637de9b72c000ec48c8a0e
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 11:45:17 2024 +0530
 
     Started work on controlnet + lora unified trainer
 #+end_example

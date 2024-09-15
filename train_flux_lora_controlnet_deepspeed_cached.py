@@ -215,7 +215,8 @@ def main():
     elif args.single_blocks is not None:
         single_blocks_idx = [int(idx) for idx in args.single_blocks.split(",")]
 
-    for name, attn_processor in dit.attn_processors.items():
+        
+    for name, attn_processor in main_net.dit.attn_processors.items():
         match = re.search(r'\.(\d+)\.', name)
         if match:
             layer_index = int(match.group(1))
