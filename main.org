@@ -279,8 +279,8 @@
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 024c0b5] New net test
-:  2 files changed, 9 insertions(+), 9 deletions(-)
+: [aravind_prodigy_dataset 1d134f5] New net test
+:  2 files changed, 8 insertions(+), 8 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -290,6 +290,12 @@
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 14:22:39 2024 +0530
+
+    New net test
+
+commit 024c0b540998a214694b9582d0d12cd81d3cf257
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:20:21 2024 +0530
 
@@ -342,10 +348,4 @@ Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 11:45:17 2024 +0530
 
     Started work on controlnet + lora unified trainer
-
-commit 7734cecc27134bc0059cc61a4127bc3ff95a63ab
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sat Sep 14 22:57:38 2024 +0530
-
-    Wrote code to generate latent for new type dataset
 #+end_example
