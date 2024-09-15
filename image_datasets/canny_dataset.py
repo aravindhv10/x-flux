@@ -7,6 +7,7 @@ from torch.utils.data import Dataset, DataLoader
 import json
 import random
 import cv2
+from safetensors.torch import load_file
 
 
 def remove_extension(path_input):
