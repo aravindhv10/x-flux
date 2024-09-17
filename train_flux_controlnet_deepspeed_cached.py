@@ -198,6 +198,7 @@ def main():
     #                  offload=False,
     #                  is_schnell=is_schnell)
 
+    main_net.dit.to(accelerator.device)
     main_net.controlnet = load_controlnet(name=args.model_name,
                                           device=accelerator.device,
                                           transformer=main_net.dit)

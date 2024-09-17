@@ -301,8 +301,8 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset aedd334] Added only controlnet
-:  2 files changed, 15 insertions(+), 15 deletions(-)
+: [aravind_prodigy_dataset 66d0cf2] Added only controlnet
+:  2 files changed, 14 insertions(+), 14 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -312,6 +312,12 @@ Untracked files:
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Tue Sep 17 15:40:45 2024 +0530
+
+    Added only controlnet
+
+commit aedd3343bd9ab548bb698bb5355a5e72cdbc9bbe
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Tue Sep 17 15:34:31 2024 +0530
 
@@ -362,12 +368,6 @@ Date:   Sun Sep 15 14:44:32 2024 +0530
 commit 54ed13998360f2ef4ae53bda044140b4f434c84a
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:36:27 2024 +0530
-
-    New net test
-
-commit 3fbb89a8164aad8e4297a18e5fe8d3be1d17c366
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:31:00 2024 +0530
 
     New net test
 #+end_example
