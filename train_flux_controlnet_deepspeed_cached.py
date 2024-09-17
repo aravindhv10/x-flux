@@ -236,8 +236,9 @@ def main():
     global_step = 0
     first_epoch = 0
 
-    main_net, optimizer, _, lr_scheduler = accelerator.prepare(
-        main_net, optimizer, deepcopy(train_dataloader), lr_scheduler)
+    main_net.controlnet, optimizer, _, lr_scheduler = accelerator.prepare(
+        main_net.controlnet, optimizer, deepcopy(train_dataloader),
+        lr_scheduler)
 
     weight_dtype = torch.float32
     if accelerator.mixed_precision == "fp16":
