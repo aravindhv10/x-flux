@@ -52,6 +52,7 @@
   docker/run_interactive.sh
   docker/build.sh
   docker/important_functions.sh
+  train_flux_controlnet_deepspeed_cached.py
 #+end_src
 
 #+begin_src conf :tangle ./rm.txt
@@ -280,14 +281,16 @@ Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	modified:   docker/README.org
-	modified:   docker/build.sh
-	new file:   docker/important_functions.sh
 	modified:   main.org
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	
+	.train_flux_controlnet_deepspeed_cached.py.~undo-tree~
 
 #+end_example
 
@@ -302,23 +305,10 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-#+begin_example
-[aravind_prodigy_dataset e884125] Added docker scripts
- 14 files changed, 660 insertions(+), 12 deletions(-)
- create mode 100644 docker/Dockerfile
- create mode 100644 docker/README.org
- create mode 100755 docker/build.sh
- create mode 100644 docker/default_config.yaml
- create mode 100644 docker/default_config.yaml.aggressive
- create mode 100644 docker/default_config.yaml.bad
- create mode 100644 docker/default_config.yaml.good
- create mode 100644 docker/default_config.yaml.new
- create mode 100644 docker/default_config.yaml.new2
- create mode 100755 docker/run.sh
- create mode 100755 docker/run_interactive.sh
- create mode 100755 docker/train.sh
-Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
-#+end_example
+: [aravind_prodigy_dataset 8b645fe] Added docker scripts
+:  5 files changed, 179 insertions(+), 15 deletions(-)
+:  create mode 100755 docker/important_functions.sh
+: Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
   git log -n 10

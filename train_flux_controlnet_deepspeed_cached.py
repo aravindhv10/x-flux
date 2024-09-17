@@ -204,64 +204,17 @@ def main():
     main_net.controlnet = main_net.controlnet.to(torch.float32)
     main_net.controlnet.train()
 
-    # lora_attn_procs = {}
-    # if args.double_blocks is None:
-    #     double_blocks_idx = list(range(19))
-    # else:
-    #     double_blocks_idx = [int(idx) for idx in args.double_blocks.split(",")]
-
-    # if args.single_blocks is None:
-    #     single_blocks_idx = list(range(38))
-    # elif args.single_blocks is not None:
-    #     single_blocks_idx = [int(idx) for idx in args.single_blocks.split(",")]
-
-        
-    # for name, attn_processor in main_net.dit.attn_processors.items():
-    #     match = re.search(r'\.(\d+)\.', name)
-    #     if match:
-    #         layer_index = int(match.group(1))
-
-    #     if name.startswith(
-    #             "double_blocks") and layer_index in double_blocks_idx:
-    #         print("setting LoRA Processor for", name)
-    #         lora_attn_procs[name] = DoubleStreamBlockLoraProcessor(
-    #             dim=3072, rank=args.rank)
-    #     elif name.startswith(
-    #             "single_blocks") and layer_index in single_blocks_idx:
-    #         print("setting LoRA Processor for", name)
-    #         lora_attn_procs[name] = SingleStreamBlockLoraProcessor(
-    #             dim=3072, rank=args.rank)
-    #     else:
-    #         lora_attn_procs[name] = attn_processor
-
-    # main_net.dit.set_attn_processor(lora_attn_procs)
-
-    # vae.requires_grad_(False)
-    # t5.requires_grad_(False)
-    # clip.requires_grad_(False)
-    main_net.dit = main_net.dit.to(torch.float32)
-    # main_net.dit.train()
-    # optimizer_cls = torch.optim.AdamW
     optimizer_cls = Prodigy
-    # for n, param in main_net.dit.named_parameters():
-    #     if '_lora' not in n:
-    #         param.requires_grad = False
-    #     else:
-    #         print(n)
-    # print(
-    #     sum([p.numel()
-    #          for p in main_net.dit.parameters() if p.requires_grad]) / 1000000,
-    #     'parameters')
 
-    # optimizer = optimizer_cls(
-    #     [p for p in dit.parameters() if p.requires_grad],
-    #     lr=args.learning_rate,
-    #     betas=(args.adam_beta1, args.adam_beta2),
-    #     weight_decay=args.adam_weight_decay,
-    #     eps=args.adam_epsilon,
-    # )
+    print(
+        sum([
+            p.numel()
+            for p in main_net.controlnet.parameters() if p.requires_grad
+        ]) / 1000000, 'parameters')
+
 
     optimizer = optimizer_cls(
+        [p for p in main_net.dit.parameters() if p.requires_grad] +
         [p for p in main_net.controlnet.parameters() if p.requires_grad],
         lr=1,
         weight_decay=args.adam_weight_decay,
@@ -476,19 +429,19 @@ def main():
                     accelerator.save_state(save_path)
                     unwrapped_model = accelerator.unwrap_model(
                         main_net.controlnet)
-                    unwrapped_model_state = accelerator.unwrap_model(
-                        main_net.dit).state_dict()
+                    # unwrapped_model_state = accelerator.unwrap_model(
+                    #     main_net.dit).state_dict()
 
                     torch.save(unwrapped_model.state_dict(),
                                os.path.join(save_path, 'controlnet.bin'))
 
-                    # save checkpoint in safetensors format
-                    lora_state_dict = {
-                        k: unwrapped_model_state[k]
-                        for k in unwrapped_model_state.keys() if '_lora' in k
-                    }
-                    save_file(lora_state_dict,
-                              os.path.join(save_path, "lora.safetensors"))
+                    # # save checkpoint in safetensors format
+                    # lora_state_dict = {
+                    #     k: unwrapped_model_state[k]
+                    #     for k in unwrapped_model_state.keys() if '_lora' in k
+                    # }
+                    # save_file(lora_state_dict,
+                    #           os.path.join(save_path, "lora.safetensors"))
 
                     logger.info(f"Saved state to {save_path}")
 
