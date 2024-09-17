@@ -212,7 +212,6 @@ def main():
             for p in main_net.controlnet.parameters() if p.requires_grad
         ]) / 1000000, 'parameters')
 
-
     optimizer = optimizer_cls(
         [p for p in main_net.controlnet.parameters() if p.requires_grad],
         lr=1,
@@ -307,7 +306,7 @@ def main():
     for epoch in range(first_epoch, args.num_train_epochs):
         train_loss = 0.0
         for step, batch in enumerate(train_dataloader):
-            with accelerator.accumulate(main_net.dit):
+            with accelerator.accumulate(main_net.controlnet):
                 x_1, control_image, inp = batch
                 control_image = control_image.to(accelerator.device)
                 x_1 = x_1.to(device=accelerator.device, dtype=weight_dtype)
@@ -375,8 +374,8 @@ def main():
                 # Backpropagate
                 accelerator.backward(loss)
                 if accelerator.sync_gradients:
-                    accelerator.clip_grad_norm_(main_net.dit.parameters(),
-                                                args.max_grad_norm)
+                    accelerator.clip_grad_norm_(
+                        main_net.controlnet.parameters(), args.max_grad_norm)
                 optimizer.step()
                 lr_scheduler.step()
                 optimizer.zero_grad()

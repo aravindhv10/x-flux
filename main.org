@@ -279,15 +279,16 @@
 On branch aravind_prodigy_dataset
 Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	modified:   main.org
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
 	modified:   train_flux_controlnet_deepspeed_cached.py
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	.train_flux_controlnet_deepspeed_cached.py.~undo-tree~
 
+no changes added to commit (use "git add" and/or "git commit -a")
 #+end_example
 
 
@@ -301,8 +302,8 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 2cb7b1b] Added only controlnet
-:  2 files changed, 28 insertions(+), 85 deletions(-)
+: [aravind_prodigy_dataset 92b5bf9] Added only controlnet
+:  2 files changed, 33 insertions(+), 39 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -311,6 +312,12 @@ Untracked files:
 
 #+RESULTS:
 #+begin_example
+commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Tue Sep 17 15:08:30 2024 +0530
+
+    Added only controlnet
+
 commit 2cb7b1b90d8c9bd3488a14c8a6fe211ead4babce
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Tue Sep 17 14:45:13 2024 +0530
@@ -362,12 +369,6 @@ Date:   Sun Sep 15 14:31:00 2024 +0530
 commit 448add8580ad244c2b0daad627e803da422fc857
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:27:47 2024 +0530
-
-    New net test
-
-commit 5dba495cb296741a17a55dd4b770246b45aba2ce
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:24:57 2024 +0530
 
     New net test
 #+end_example
