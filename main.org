@@ -282,11 +282,7 @@ Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	modified:   main.org
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   
+	modified:   train_flux_controlnet_deepspeed_cached.py
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
@@ -299,15 +295,14 @@ Untracked files:
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Added docker scripts'
+  git commit -m 'Added only controlnet'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 8b645fe] Added docker scripts
-:  5 files changed, 179 insertions(+), 15 deletions(-)
-:  create mode 100755 docker/important_functions.sh
+: [aravind_prodigy_dataset 2cb7b1b] Added only controlnet
+:  2 files changed, 28 insertions(+), 85 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -316,7 +311,43 @@ Untracked files:
 
 #+RESULTS:
 #+begin_example
-commit 
+commit 2cb7b1b90d8c9bd3488a14c8a6fe211ead4babce
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Tue Sep 17 14:45:13 2024 +0530
+
+    Added only controlnet
+
+commit 7887e09f156b47d1f01b95d07dfc39faba196ffd
+Author: Apple <apple@Apples-MacBook-Pro.local>
+Date:   Tue Sep 17 12:43:33 2024 +0530
+
+    removing lora first batch
+
+commit e3d9dccc4e6345aaebb10b168ea616a402370b96
+Author: Apple <apple@Apples-MacBook-Pro.local>
+Date:   Tue Sep 17 12:10:03 2024 +0530
+
+    control net only , cached latents
+
+commit ee19ba9fafbc5b4d035751dba8575696a555c0c6
+Author: Apple <apple@Apples-MacBook-Pro.local>
+Date:   Tue Sep 17 12:06:43 2024 +0530
+
+    control net only , cached latents
+
+commit 8b645fe2c3b6407b05bb733ee6650fcda525062d
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 14:48:46 2024 +0530
+
+    Added docker scripts
+
+commit e884125b0d67b0bdfb92ffeb98936e1917dc9253
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Sun Sep 15 14:44:32 2024 +0530
+
+    Added docker scripts
+
+commit 54ed13998360f2ef4ae53bda044140b4f434c84a
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:36:27 2024 +0530
 
@@ -337,42 +368,6 @@ Date:   Sun Sep 15 14:27:47 2024 +0530
 commit 5dba495cb296741a17a55dd4b770246b45aba2ce
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:24:57 2024 +0530
-
-    New net test
-
-commit 1d134f5a1946ed2eecdaf1b3a92046e2e7ce98cf
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:22:39 2024 +0530
-
-    New net test
-
-commit 024c0b540998a214694b9582d0d12cd81d3cf257
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:20:21 2024 +0530
-
-    New net test
-
-commit 7bc73556cf4e2e18c3ee3bf39e64426b4ceb1259
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:16:33 2024 +0530
-
-    New net test
-
-commit be79b688168acc6afafa4a69a6f9e85b2cd7fbfb
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:13:29 2024 +0530
-
-    New net test
-
-commit 6b3fbe2697450c8cb5f39117905aa3fb15a91230
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:08:40 2024 +0530
-
-    New net test
-
-commit b058d091c80dde7f3e7aca205b9bc8b92511adea
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:05:35 2024 +0530
 
     New net test
 #+end_example

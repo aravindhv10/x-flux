@@ -214,7 +214,6 @@ def main():
 
 
     optimizer = optimizer_cls(
-        [p for p in main_net.dit.parameters() if p.requires_grad] +
         [p for p in main_net.controlnet.parameters() if p.requires_grad],
         lr=1,
         weight_decay=args.adam_weight_decay,
