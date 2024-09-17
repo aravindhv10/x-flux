@@ -204,54 +204,54 @@ def main():
     main_net.controlnet = main_net.controlnet.to(torch.float32)
     main_net.controlnet.train()
 
-    lora_attn_procs = {}
-    if args.double_blocks is None:
-        double_blocks_idx = list(range(19))
-    else:
-        double_blocks_idx = [int(idx) for idx in args.double_blocks.split(",")]
+    # lora_attn_procs = {}
+    # if args.double_blocks is None:
+    #     double_blocks_idx = list(range(19))
+    # else:
+    #     double_blocks_idx = [int(idx) for idx in args.double_blocks.split(",")]
 
-    if args.single_blocks is None:
-        single_blocks_idx = list(range(38))
-    elif args.single_blocks is not None:
-        single_blocks_idx = [int(idx) for idx in args.single_blocks.split(",")]
+    # if args.single_blocks is None:
+    #     single_blocks_idx = list(range(38))
+    # elif args.single_blocks is not None:
+    #     single_blocks_idx = [int(idx) for idx in args.single_blocks.split(",")]
 
         
-    for name, attn_processor in main_net.dit.attn_processors.items():
-        match = re.search(r'\.(\d+)\.', name)
-        if match:
-            layer_index = int(match.group(1))
+    # for name, attn_processor in main_net.dit.attn_processors.items():
+    #     match = re.search(r'\.(\d+)\.', name)
+    #     if match:
+    #         layer_index = int(match.group(1))
 
-        if name.startswith(
-                "double_blocks") and layer_index in double_blocks_idx:
-            print("setting LoRA Processor for", name)
-            lora_attn_procs[name] = DoubleStreamBlockLoraProcessor(
-                dim=3072, rank=args.rank)
-        elif name.startswith(
-                "single_blocks") and layer_index in single_blocks_idx:
-            print("setting LoRA Processor for", name)
-            lora_attn_procs[name] = SingleStreamBlockLoraProcessor(
-                dim=3072, rank=args.rank)
-        else:
-            lora_attn_procs[name] = attn_processor
+    #     if name.startswith(
+    #             "double_blocks") and layer_index in double_blocks_idx:
+    #         print("setting LoRA Processor for", name)
+    #         lora_attn_procs[name] = DoubleStreamBlockLoraProcessor(
+    #             dim=3072, rank=args.rank)
+    #     elif name.startswith(
+    #             "single_blocks") and layer_index in single_blocks_idx:
+    #         print("setting LoRA Processor for", name)
+    #         lora_attn_procs[name] = SingleStreamBlockLoraProcessor(
+    #             dim=3072, rank=args.rank)
+    #     else:
+    #         lora_attn_procs[name] = attn_processor
 
-    main_net.dit.set_attn_processor(lora_attn_procs)
+    # main_net.dit.set_attn_processor(lora_attn_procs)
 
     # vae.requires_grad_(False)
     # t5.requires_grad_(False)
     # clip.requires_grad_(False)
     main_net.dit = main_net.dit.to(torch.float32)
-    main_net.dit.train()
+    # main_net.dit.train()
     # optimizer_cls = torch.optim.AdamW
     optimizer_cls = Prodigy
-    for n, param in main_net.dit.named_parameters():
-        if '_lora' not in n:
-            param.requires_grad = False
-        else:
-            print(n)
-    print(
-        sum([p.numel()
-             for p in main_net.dit.parameters() if p.requires_grad]) / 1000000,
-        'parameters')
+    # for n, param in main_net.dit.named_parameters():
+    #     if '_lora' not in n:
+    #         param.requires_grad = False
+    #     else:
+    #         print(n)
+    # print(
+    #     sum([p.numel()
+    #          for p in main_net.dit.parameters() if p.requires_grad]) / 1000000,
+    #     'parameters')
 
     # optimizer = optimizer_cls(
     #     [p for p in dit.parameters() if p.requires_grad],
