@@ -44,8 +44,9 @@ class CustomImageDataset(Dataset):
             img = img.resize((self.img_size, self.img_size))
             img = torch.from_numpy((np.array(img) / 127.5) - 1)
             img = img.permute(2, 0, 1)
-            json_path = self.images[idx].split('.')[0] + '.json'
-            prompt = json.load(open(json_path))['caption']
+            json_path = self.images[idx].split('.')[0] + '.txt'
+            # prompt = json.load(open(json_path))['caption']
+            prompt = open(json_path).read()
             return img, prompt
         except Exception as e:
             print(e)
