@@ -28,31 +28,31 @@
 :   remotes/origin/main
 
 #+begin_src conf :tangle ./git_add.txt
+  docker/build.sh
+  docker/default_config.yaml
+  docker/default_config.yaml.aggressive
+  docker/default_config.yaml.bad
+  docker/default_config.yaml.good
+  docker/default_config.yaml.new
+  docker/default_config.yaml.new2
+  docker/Dockerfile
+  docker/important_functions.sh
+  docker/README.org
+  docker/run_interactive.sh
+  docker/run.sh
+  docker/train.sh
   .gitignore
+  image_datasets/canny_dataset.py
   image_datasets/dataset.py
   main.org
+  make_latent_2.py
   make_latent.py
   new/train_flux_lora_deepspeed.org
-  train_flux_lora_deepspeed.py
-  train_flux_lora_deepspeed_cached.py
-  make_latent_2.py
-  image_datasets/canny_dataset.py
-  make_latent_2.py
-  train_flux_lora_controlnet_deepspeed_cached.py
-  docker/train.sh
-  docker/default_config.yaml
-  docker/default_config.yaml.good
-  docker/default_config.yaml.aggressive
-  docker/default_config.yaml.new2
-  docker/README.org
-  docker/Dockerfile
-  docker/run.sh
-  docker/default_config.yaml.new
-  docker/default_config.yaml.bad
-  docker/run_interactive.sh
-  docker/build.sh
-  docker/important_functions.sh
   train_flux_controlnet_deepspeed_cached.py
+  train_flux_deepspeed_controlnet_aravind.py
+  train_flux_lora_controlnet_deepspeed_cached.py
+  train_flux_lora_deepspeed_cached.py
+  train_flux_lora_deepspeed.py
 #+end_src
 
 #+begin_src conf :tangle ./rm.txt
@@ -78,6 +78,9 @@
   .train_flux_deepspeed_controlnet.py.~undo-tree~
   docker/#README.org#
   docker/.README.org.~undo-tree~
+  .train_flux_controlnet_deepspeed_cached.py.~undo-tree~
+  .train_flux_deepspeed_controlnet_aravind.py.~undo-tree~
+  train_flux_deepspeed_controlnet_aravind.py~
 #+end_src
 
 #+begin_src conf :tangle ./gitignore
@@ -282,11 +285,10 @@ Your branch is up to date with 'origin/aravind_prodigy_dataset'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	modified:   main.org
-	modified:   train_flux_controlnet_deepspeed_cached.py
+	new file:   train_flux_deepspeed_controlnet_aravind.py
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	.train_flux_controlnet_deepspeed_cached.py.~undo-tree~
 
 #+end_example
 
@@ -301,8 +303,8 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 66d0cf2] Added only controlnet
-:  2 files changed, 14 insertions(+), 14 deletions(-)
+: [aravind_prodigy_dataset 6880f81] Added only controlnet
+:  2 files changed, 9 insertions(+), 8 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -312,6 +314,12 @@ Untracked files:
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Tue Sep 17 15:45:21 2024 +0530
+
+    Added only controlnet
+
+commit 66d0cf29d585479830177604eec539e7bf3fd38d
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Tue Sep 17 15:40:45 2024 +0530
 
@@ -364,10 +372,4 @@ Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:44:32 2024 +0530
 
     Added docker scripts
-
-commit 54ed13998360f2ef4ae53bda044140b4f434c84a
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:36:27 2024 +0530
-
-    New net test
 #+end_example
