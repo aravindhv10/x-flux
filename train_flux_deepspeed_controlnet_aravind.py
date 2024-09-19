@@ -269,7 +269,6 @@ def main():
                     torch.randn((bs, ), device=accelerator.device))
 
                 x_0 = torch.randn_like(x_1).to(accelerator.device)
-                print(t.shape, x_1.shape, x_0.shape)
                 x_t = (1 - t.unsqueeze(1).unsqueeze(2).repeat(
                     1, x_1.shape[1],
                     x_1.shape[2])) * x_1 + t.unsqueeze(1).unsqueeze(2).repeat(
