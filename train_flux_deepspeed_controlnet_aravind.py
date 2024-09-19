@@ -151,7 +151,7 @@ def main():
         weight_decay=args.adam_weight_decay,
     )
 
-    train_dataloader = loader(**args.data_config)
+    train_dataloader = loader_2(**args.data_config)
     # Scheduler and math around the number of training steps.
     overrode_max_train_steps = False
     num_update_steps_per_epoch = math.ceil(

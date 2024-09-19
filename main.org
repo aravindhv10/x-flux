@@ -278,33 +278,30 @@
 #+end_src
 
 #+RESULTS:
-#+begin_example
-On branch aravind_prodigy_dataset
-Your branch is up to date with 'origin/aravind_prodigy_dataset'.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	modified:   main.org
-	new file:   train_flux_deepspeed_controlnet_aravind.py
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-#+end_example
+: On branch aravind_prodigy_dataset
+: Your branch is up to date with 'origin/aravind_prodigy_dataset'.
+: 
+: Changes to be committed:
+:   (use "git restore --staged <file>..." to unstage)
+: 	modified:   .gitignore
+: 	modified:   main.org
+: 	new file:   train_flux_deepspeed_controlnet_aravind.py
+: 
 
 
 #+RESULTS:
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Added only controlnet'
+  git commit -m 'Added new controlnet training code'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 6880f81] Added only controlnet
-:  2 files changed, 9 insertions(+), 8 deletions(-)
+: [aravind_prodigy_dataset 44a1342] Added new controlnet training code
+:  3 files changed, 428 insertions(+), 29 deletions(-)
+:  create mode 100644 train_flux_deepspeed_controlnet_aravind.py
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -314,6 +311,12 @@ Untracked files:
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Thu Sep 19 12:35:49 2024 +0530
+
+    Added new controlnet training code
+
+commit 6880f817b31afec72932a5bf43d6818cec551415
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Tue Sep 17 15:45:21 2024 +0530
 
@@ -364,12 +367,6 @@ Date:   Tue Sep 17 12:06:43 2024 +0530
 commit 8b645fe2c3b6407b05bb733ee6650fcda525062d
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Sun Sep 15 14:48:46 2024 +0530
-
-    Added docker scripts
-
-commit e884125b0d67b0bdfb92ffeb98936e1917dc9253
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:44:32 2024 +0530
 
     Added docker scripts
 #+end_example
