@@ -283,9 +283,8 @@
 : 
 : Changes to be committed:
 :   (use "git restore --staged <file>..." to unstage)
-: 	modified:   .gitignore
 : 	modified:   main.org
-: 	new file:   train_flux_deepspeed_controlnet_aravind.py
+: 	modified:   train_flux_deepspeed_controlnet_aravind.py
 : 
 
 
@@ -293,15 +292,14 @@
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Added new controlnet training code'
+  git commit -m 'Corrected loader issue'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 44a1342] Added new controlnet training code
-:  3 files changed, 428 insertions(+), 29 deletions(-)
-:  create mode 100644 train_flux_deepspeed_controlnet_aravind.py
+: [aravind_prodigy_dataset 48e502c] Corrected loader issue
+:  2 files changed, 20 insertions(+), 23 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -311,6 +309,12 @@
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Thu Sep 19 13:01:02 2024 +0530
+
+    Corrected loader issue
+
+commit 44a13429c023c1ccf77e15e131d1cfecb1945dc2
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Thu Sep 19 12:35:49 2024 +0530
 
@@ -363,10 +367,4 @@ Author: Apple <apple@Apples-MacBook-Pro.local>
 Date:   Tue Sep 17 12:06:43 2024 +0530
 
     control net only , cached latents
-
-commit 8b645fe2c3b6407b05bb733ee6650fcda525062d
-Author: aravindhv10 <aravindhv10@gmail.com>
-Date:   Sun Sep 15 14:48:46 2024 +0530
-
-    Added docker scripts
 #+end_example

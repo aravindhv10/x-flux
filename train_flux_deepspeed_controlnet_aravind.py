@@ -264,7 +264,7 @@ def main():
                 #                     ph=2,
                 #                     pw=2)
 
-                bs = img.shape[0]
+                bs = x_1.shape[0]
                 t = torch.sigmoid(
                     torch.randn((bs, ), device=accelerator.device))
 
