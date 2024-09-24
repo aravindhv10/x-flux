@@ -292,14 +292,14 @@
 : 0
 
 #+begin_src sh :shebang #!/bin/sh :results output 
-  git commit -m 'Corrected batch size stuff'
+  git commit -m 'Removed debug print statement'
   ssh-add "${HOME}/.ssh/github10"
   git push --set-upstream origin aravind_prodigy_dataset
 #+end_src
 
 #+RESULTS:
-: [aravind_prodigy_dataset 0a6e674] Corrected batch size stuff
-:  2 files changed, 11 insertions(+), 13 deletions(-)
+: [aravind_prodigy_dataset c99bdbf] Removed debug print statement
+:  2 files changed, 9 insertions(+), 10 deletions(-)
 : Branch 'aravind_prodigy_dataset' set up to track remote branch 'aravind_prodigy_dataset' from 'origin'.
 
 #+begin_src sh :shebang #!/bin/sh :results output 
@@ -309,6 +309,12 @@
 #+RESULTS:
 #+begin_example
 commit 
+Author: aravindhv10 <aravindhv10@gmail.com>
+Date:   Thu Sep 19 13:11:57 2024 +0530
+
+    Removed debug print statement
+
+commit 0a6e6748d65e35bfc2115df6b817c167f6d97662
 Author: aravindhv10 <aravindhv10@gmail.com>
 Date:   Thu Sep 19 13:08:26 2024 +0530
 
@@ -361,10 +367,4 @@ Author: Apple <apple@Apples-MacBook-Pro.local>
 Date:   Tue Sep 17 12:43:33 2024 +0530
 
     removing lora first batch
-
-commit e3d9dccc4e6345aaebb10b168ea616a402370b96
-Author: Apple <apple@Apples-MacBook-Pro.local>
-Date:   Tue Sep 17 12:10:03 2024 +0530
-
-    control net only , cached latents
 #+end_example
